@@ -147,7 +147,11 @@ npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 npm install --save-dev @electron-forge/cli -d --registry=https://registry.npmmirror.com
 ```
 
+- macos 安装 @electron-forge/maker-dmg
 
+```
+npm install --save-dev  -d @electron-forge/maker-dmg --registry=https://registry.npmmirror.com
+```
 
 - Ai Talk 目录下执行，打包文件存放在 out 目录下（打包过程中若出现报错可忽略）
 
