@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>代理设置</title>
+  <link rel="stylesheet" href="../css/proxy.css">
+</head>
+<body>
+  <div class="container">
+    <h1>
+      <img src="../../assets/network.svg" alt="设置" class="icon"> 设置代理
+    </h1>
+
+    <input type="text" id="proxy-input" placeholder="请输入代理地址,例：http://127.0.0.1:7890">
+    <button id="set-proxy-btn">设置代理</button>
+    <button id="clear-proxy-btn">清除代理</button>
+    <button id="cancel">关闭</button>
+  </div>
+
+  <script>
+    const proxyInput = document.getElementById('proxy-input');
+    const setProxyBtn = document.getElementById('set-proxy-btn');
+    const clearProxyBtn = document.getElementById('clear-proxy-btn');
+    const cancelButton = document.getElementById('cancel');
+
+    // 设置代理
+    setProxyBtn.addEventListener('click', () => {
+      const proxyAddress = proxyInput.value.trim();
+      if (proxyAddress) {
+        window.electron.setProxy(proxyAddress);
+      } else {
+        // alert('请输入代理地址');
+      }
+    });
+
+    // 清除代理
+    clearProxyBtn.addEventListener('click', () => {
+      window.electron.clearProxy();
+    });
+
+    // 关闭窗口
+    cancelButton.addEventListener('click', () => {
+      window.close();
+    });
+  </script>
+</body>
+</html>

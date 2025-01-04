@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ai Talk</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <div id="container">
+    <!-- 测边栏 -->
+    <div id="sidebar">
+      <!-- logo -->
+      <div class="logo">
+        <img src="../../assets/logo.png" alt="Logo">
+        <h1 class="app_name">Ai Talk</h1>
+      </div>
+
+      <!-- 对话 -->
+      <div class="dialogue">
+        <p class="dialogue_text">
+          选择对话
+          <button class="action_button">
+            <img src="../../assets/dialogue.svg" alt="Logo">
+          </button>
+        </p>
+      </div>
+
+      <!-- AI 模块 -->
+      <div class="ai_module">
+        <div class="icon-item">
+          <button id="kimi">
+            <img src="../../assets/kimi.ico" alt="kimi" class="icon-img"> 月之暗面 Kimi
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="doubao">
+            <img src="../../assets/doubao.png" alt="doubao" class="icon-img"> 字节 豆包
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="tyqw">
+            <img src="../../assets/tyqw.png" alt="tyqw" class="icon-img"> 啊里 通义千问
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="tenxun">
+            <img src="../../assets/tenxun.png" alt="tenxun" class="icon-img"> 腾讯 元宝
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="wxyy">
+            <img src="../../assets/wxyy.ico" alt="wxyy" class="icon-img"> 百度 文心一言
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="openai">
+            <img src="../../assets/chatgpt.ico" alt="OpenAI" class="icon-img"> OpenAI ChatGPT
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="google">
+            <img src="../../assets/google.png" alt="google" class="icon-img"> Google Gemini
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="poe">
+            <img src="../../assets/poe.svg" alt="poe" class="icon-img"> Quora Poe
+          </button>
+        </div>
+      </div>
+
+      <!-- 设置选项列表 -->
+      <div class="settings-list">
+        <div class="settings-item">
+          <button id="home-btn">
+            <img src="../../assets/home.svg" alt="Night Mode Icon"> 回到主页
+          </button>
+        </div>
+
+        <div class="settings-item">
+          <button id="set-proxy-btn">
+            <img src="../../assets/network.svg" alt="Language Icon"> 网络设置
+          </button>
+        </div>
+
+        <div class="settings-item">
+          <button id="manual-btn">
+            <img src="../../assets/manual.svg" alt="Settings Icon"> 用户手册
+          </button>
+        </div>
+
+        <div class="settings-item">
+          <button id="version-btn">
+            <img src="../../assets/version.svg" alt="Version Icon"> 关于程序
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 右边显示区域 -->
+    <div id="content">
+      <webview id="webview" src="second.html" style="width: 100%; height: 100vh;"></webview>
+    </div>
+  </div>
+
+  <!--- 引入渲染进程文件 renderer.js -->
+  <script src="../js/renderer.js"></script>
+</body>
+</html>

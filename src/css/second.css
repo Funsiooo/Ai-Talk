@@ -1,0 +1,175 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef; /* 淡灰色背景 */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* 确保占满整个视口高度 */
+    margin: 0;  
+}
+
+.main_display {
+    display: flex;
+    flex-direction: row; /* 水平排列窗口 */
+    flex-wrap: wrap; /* 使元素在空间不足时自动换行 */
+    justify-content: center; /* 水平居中对齐 */
+    align-items: center; /* 垂直居中对齐 */
+    text-align: center;
+    padding: 0px;
+    background-color: #ffffff; /* 白色背景 */
+    border-radius: 0px;
+    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1); /* 柔和的阴影效果 */
+    width: 100%;  /* 调整为 100% 宽度 */
+    height: 100%;
+}
+
+/* 新增窗口的样式 */
+.text_windwo {
+    /* background-color: #f8f9fa; 淡灰色背景 */
+    border: 0px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 8px;
+    width: 100%;  /* 保持原样 */
+    min-height: 200px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;  /* 内容底部对齐 */
+    align-items: center;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    font-size: 18px;
+}
+
+/* 新增窗口的样式 */
+.window {
+    flex-direction: row; /* 水平排列 */
+    background-color: #ffffff; /* 淡灰色背景 */
+    border: 0px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 20px;
+    width: 240px; /* 每个窗口的固定宽度 */
+    height: 150px; /* 高度保持一致 */
+    text-align: left;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-size: 18px;
+    margin-top: -350px; /* 向上移动 20px */
+}
+
+.window img{
+    width: 18px; /* 图标更大 */
+    height: 18px;
+    margin-right: 12px;
+}
+
+
+.title_text {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* 小字文本 */
+.describe_text {
+    font-size: 12px;    
+    color: #888;
+    margin-top: 10px;
+}
+
+/* 小字文本 */
+.big-text {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin-top: 10px;
+}
+
+/* 小字文本 */
+.small-text {
+    font-size: 14px;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* 打字机效果 */
+#typing-text {
+    display: inline-block;
+    white-space: nowrap; /* 防止文本换行 */
+    overflow: hidden; /* 隐藏多余的文字 */
+
+    width: 0; /* 初始宽度为 0 */
+    border-right: 0px solid #333; /* 模拟打字机的光标 */
+    animation: typing 2s steps(20) 1s forwards, blink 0.75s step-end infinite, loopTyping 4s 1s infinite; /* 打字效果和光标闪烁，循环 */
+}
+
+/* 打字机效果 */
+#typing-text_2 {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 0;
+    border-right: 0px solid #333;
+    animation: typing 4s steps(40) 1s forwards, blink 0.75s step-end infinite, loopTyping 6s 1s infinite;
+}
+
+/* 打字效果 */
+@keyframes typing {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+/* 光标闪烁效果 */
+@keyframes blink {
+    0%, 50% {
+        border-color: transparent;
+    }
+    50.1%, 100% {
+        border-color: #333;
+    }
+}
+
+/* 无限循环效果，打字完后重新开始 */
+@keyframes loopTyping {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+/* 响应式设计 */
+@media (max-width: 480px) {
+    .main_display {
+        padding: 15px;
+        flex-direction: column; /* 在小屏幕上换成垂直排列 */
+    }
+
+    p {
+        font-size: 18px;
+    }
+
+    .input-box {
+        width: 100%;
+    }
+
+    /* 窗口样式在小屏幕下调整 */
+    .window {
+        width: 100%;
+        margin: 10px 0;
+    }
+}

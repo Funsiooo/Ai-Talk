@@ -1,0 +1,256 @@
+/* 设置页面整体的宽度和高度 */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f7f9fc; /* 背景色 */
+  display: flex;
+  flex-direction: column;
+}
+
+/* 容器占满整个视口 */
+#container {
+  display: flex;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+/* 左侧 sidebar 样式 */
+#sidebar {
+  width: 320px; /* 固定宽度 */
+  background-color: #f4f4f4; /* 背景色 */
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* 右侧有轻微阴影 */
+  border-right: 1px solid #ddd; /* 右边框 */
+}
+
+/* logo 样式 */
+.logo {
+  height: 7%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 10px 25px;
+  margin-bottom: 10px;
+}
+
+.logo img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.app_name {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+/* 对话区域样式 */
+.dialogue {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: 10px;
+  padding: 10px;
+}
+
+.dialogue_text {
+  font-size: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  padding-left: 15px; /* 向右移动文字10px，原来是8px */
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 更强的阴影 */
+  transition: box-shadow 0.3s ease;
+  
+}
+
+.dialogue img {
+  width: 20px;
+  height: 20px;
+  margin-right: 0px;
+}
+
+.dialogue_text:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 鼠标悬停时，增加阴影 */
+}
+
+.dialogue .action_button {
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  color: #007bff;
+  transition: color 0.3s ease;
+}
+
+.dialogue .action_button:hover {
+  color: #0056b3;
+}
+
+/* AI 模块的按钮样式 */
+.ai_module {
+  width: 100%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.icon-item {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  margin-bottom: 16.5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.icon-item:hover {
+  background-color: #e7f1ff; /* 更柔和的悬停背景色 */
+  transform: translateX(8px); /* 鼠标悬停时，轻微移动效果 */
+}
+
+.icon-item img {
+  width: 24px; /* 图标更大 */
+  height: 24px;
+  margin-right: 12px;
+}
+
+.icon-item .icon-text {
+  font-size: 14px;
+  color: #333;
+  font-weight: 600;
+}
+
+.icon-item:hover .icon-text {
+  color: #007bff;
+}
+
+
+/* 过渡和动画效果 */
+* {
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+/* 去掉按钮边框和轮廓 */
+button {
+  border: none;
+  outline: none;
+  background: none; /* 去掉按钮背景 */
+  cursor: pointer;
+  padding: 8px 15px; /* 可以根据需求调整按钮的内边距 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: #333; /* 设置字体颜色 */
+  transition: background-color 0.3s, transform 0.3s ease; /* 按钮悬停效果 */
+}
+
+button:hover {
+  /* background-color: #ffffff; 鼠标悬停时背景色 */
+  transform: translateY(-2px); /* 鼠标悬停时轻微上移 */
+}
+
+button:active {
+  transform: translateY(2px); /* 点击按钮时轻微下移 */
+}
+
+/* 图标按钮样式 */
+button img.icon-img {
+  width: 20px;  /* 图标的宽度 */
+  height: 20px; /* 图标的高度 */
+  margin-right: 10px; /* 图标和文字之间的间距 */
+}
+
+/* 修改图标的文本样式 */
+button span.icon-text {
+  font-size: 14px;
+  color: #333;
+}
+
+/* 设置选项列表 */
+.settings-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  /* overflow-y: auto; 允许垂直滚动 */
+  padding: 10px;
+  /* border-bottom: 1px solid #e0e0e0; 给对话区域添加底部边框 */
+}
+
+.settings-item {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.settings-item:hover {
+  background-color: #f0f0f0;
+  transform: translateX(5px);
+}
+
+.settings-item img {
+  width: 15px;
+  height: 15px;
+  margin-right: 15px;
+}
+
+.settings-item .setting-text {
+  font-size: 13px;
+  color: #333;
+}
+
+.settings-item:hover .setting-text {
+  color: #007BFF; /* 鼠标悬停时文字颜色变更 */
+}
+
+/* 设置区域边框样式 */
+.settings-list {
+  border-top: 1px solid #e0e0e0; /* 给设置区域添加顶部边框 */
+  padding-top: 20px; /* 上间距，确保边框不与内容紧贴 */
+  padding-bottom: 20px;
+}
+
+
+
+/* 右侧 content 样式 */
+#content {
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  box-sizing: border-box;
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+
+

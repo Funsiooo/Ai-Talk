@@ -1,0 +1,182 @@
+/* 全局设置 */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef; /* 淡灰色背景 */
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.version-container {
+    background: #fff;
+    border-radius: 8px;
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
+    width: 100%;
+    max-width: 600px; /* 最大宽度，保持内容的可读性 */
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header Section */
+.version-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.logo img {
+    max-width: 60px;
+    margin-right: 10px;
+}
+
+.app-name {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #333;
+}
+
+.copyright {
+    font-size: 0.9rem;
+    color: #777;
+    margin-top: 10px;
+}
+
+.copyright img {
+    width: 25px;
+    height: 25px;
+}
+
+/* 版本信息部分 */
+.version-content {
+    display: flex;
+    flex-direction: column;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.version-content a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.version-content a:hover {
+    text-decoration: underline;
+}
+
+/* 分层盒子 */
+.info-box {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.info-box h1 {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.info-box p {
+    font-size: 14px;
+}
+
+/* 更新日志部分 */
+.changelog {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.changelog h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.changelog ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.changelog li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* 当前版本部分 */
+.version{
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.version h2 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Footer Section */
+.version-footer {
+    text-align: center;
+    margin-top: auto; /* Push footer to the bottom */
+}
+
+button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* 响应式设计 */
+@media (max-width: 600px) {
+    .version-container {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .app-name {
+        font-size: 1.5rem;
+    }
+
+    .version-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .version-content {
+        font-size: 13px;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+    }
+}
