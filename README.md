@@ -1,10 +1,11 @@
-# <img src="./assets/logo.png" alt="示例图片" style="width: 85px;"> Ai Talk
+# Ai Talk
+
 
 <p align="left">
   <img alt="GitHub License" src="https://img.shields.io/github/license/Funsiooo/Ai-Talk?color=%23%2067b93d">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Funsiooo/Ai-talk">
 </p>
-
+<br/>
 
 ## 📔 简介
 
@@ -12,19 +13,20 @@
 
 
 
-> 📑   **Note：**OpenAi ChatGPT、Google Gemini 、Quora Poe 需要设置网络代理才能正常访问。
+> 📑   **Note：** OpenAi ChatGPT、Google Gemini 、Quora Poe 需要设置网络代理才能正常访问。
 
 
+<br/>
 
 ## 📟 功能介绍
 
-**界面：**程序主要由两部分组成：左侧的侧边栏和右侧的显示区域。点击左侧的某个大模型，右侧将加载该大模型的官方页面，您即可开始对话。
+**界面：** 程序主要由两部分组成：左侧的侧边栏和右侧的显示区域。点击左侧的某个大模型，右侧将加载该大模型的官方页面，您即可开始对话。
 
-![image-20250101174632810](/Users/ooooo/Files/tools/notebooks/images/example1.png)
+![example1](./assets/example1.png)
 
-![image-20241231162813581](/Users/ooooo/Files/tools/notebooks/images/example2-6002009.png)
+![example2](./assets/example2.png)
 
-**网络代理：**由于 **OpenAI ChatGPT** 、 **Google Gemini** 、**Quora Poe** 模型需要访问国外网站，因此在使用之前，需要在左侧侧边栏下方的 “网络设置” 中配置代理网络。目前只支持 **HTTP** 和 **HTTPS** 协议。配置步骤如下：
+**网络代理：** 由于 **OpenAI ChatGPT** 、 **Google Gemini** 、**Quora Poe** 模型需要访问国外网站，因此在使用之前，需要在左侧侧边栏下方的 “网络设置” 中配置代理网络。目前只支持 **HTTP** 和 **HTTPS** 协议。配置步骤如下：
 
 
 
@@ -33,8 +35,7 @@
 > - 如网络设置输入错误，点击 “清除代理” 即可恢复程序默认设置
 > - 设置完毕后点击 “关闭” 
 
-![image-20241231162813581](/Users/ooooo/Files/tools/notebooks/images/example3-6002009.png)
-
+![example3](./assets/example3.png)
 
 
 ## 📸 大模型使用规则
@@ -85,7 +86,7 @@
 
 消息条数限制：存在次数限额，限额不详。
 
-
+<br/>
 
 ## ⌨️ 源码启动
 
@@ -111,6 +112,7 @@ npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 npm start
 ```
 
+<br/>
 
 
 ## 📦 打包
@@ -147,63 +149,9 @@ npm run build
 
 ![](./assets/build.png)
 
-
-
-## 🔑 客户端下载
-
-<table style="width: 100%">
-  <tr>
-    <td width="25%" align="center">
-      <b>Windows</b>
-    </td>
-    <td width="25%" align="center" colspan="2">
-      <b>MacOS</b>
-    </td>
-    <td width="25%" align="center">
-      <b>Linux</b>
-    </td>
-  </tr>
-  <tr style="text-align: center">
-    <td align="center" valign="middle">
-      <a href='https://github.com/Funsiooo/chunsou'>
-        <img src='./assets/windows.png' style="height:24px; width: 24px" />
-        <br />
-        <b>Setup.exe</b>
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href='https://github.com/Funsiooo/chunsou'>
-        <img src='./assets/mac.png' style="height:24px; width: 24px" />
-        <br />
-        <b>Intel</b>
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href='https://github.com/Funsiooo/chunsou'>
-        <img src='./assets/mac.png' style="height:24px; width: 24px" />
-        <br />
-        <b>M1/M2</b>
-      </a>
-    </td>
-    <td align="center" valign="middle">
-      <a href='https://github.com/Funsiooo/chunsou'>
-        <img src='./assets/linux.png' style="height:24px; width: 24px" />
-        <br />
-        <b>AppImage</b>
-      </a>
-    </td>
-  </tr>
-</table>
-
-
-
+<br/>
 
 ## ☕ 请作者喝杯咖啡
 
 <img src="./assets/wechat.png" alt="示例图片" style="width: 500px; float: left; ">
 
-
-
-## ✨ Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=Funsiooo/Ai-Talk&type=Date)](https://star-history.com/#Funsiooo/Ai-Talk&Date)
