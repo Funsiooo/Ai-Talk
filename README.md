@@ -1,17 +1,16 @@
-# Ai Talk
+# <img src="./assets/title.png" alt="Ai_Talk" style="width: 50px;"> Ai Talk
 
 
 <p align="left">
   <img alt="GitHub License" src="https://img.shields.io/github/license/Funsiooo/Ai-Talk?color=%23%2067b93d">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Funsiooo/Ai-talk">
 </p>
-<br/>
 
 ## 📔 简介
 
-**Ai Talk** 是一款集合了多种大语言模型应用的开源桌面客户端，基于 Electron 构建。当前支持以下大模型：OpenAI ChatGPT、Google Gemini、Quora Poe、月之暗面 Kimi、字节 豆包、阿里 通义千问、腾讯 元宝、百度 文心一言。 **项目地址：https://github.com/Funsiooo/Ai-Talk **。
+**Ai Talk** 是一款集合了多种大语言模型应用的开源桌面客户端，基于 Electron 构建。当前支持以下大模型：OpenAI ChatGPT、Google Gemini、Quora Poe、月之暗面 Kimi、字节 豆包、阿里 通义千问、腾讯 元宝、百度 文心一言。 
 
-
+<br/>
 
 > 📑   **Note：** OpenAi ChatGPT、Google Gemini 、Quora Poe 需要设置网络代理才能正常访问。
 
@@ -20,7 +19,7 @@
 
 ## 📟 功能介绍
 
-**界面：** 程序主要由两部分组成：左侧的侧边栏和右侧的显示区域。点击左侧的某个大模型，右侧将加载该大模型的官方页面，您即可开始对话。
+**界面：** 程序主要由两部分组成：左侧的侧边栏和右侧的显示区域。点击左侧的某个大模型，右侧将加载该大模型的官方页面，即可开始对话。
 
 ![example1](./assets/example1.png)
 
@@ -96,14 +95,18 @@
 https://nodejs.org/zh-cn/download
 ```
 
+- 下载项目源码
 
+```
+git clone https://github.com/Funsiooo/Ai-Talk.git
+```
 
 - 安装 electron
 
 ```
+cd Ai-Talk
 npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 ```
-
 
 
 - Ai Talk 目录下执行
@@ -123,11 +126,16 @@ npm start
 https://nodejs.org/zh-cn/download
 ```
 
+- 下载项目源码
 
+```
+git clone https://github.com/Funsiooo/Ai-Talk.git
+```
 
 - 安装 electron
 
 ```
+cd Ai-Talk
 npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 ```
 
@@ -146,6 +154,7 @@ npm install --save-dev @electron-forge/cli -d --registry=https://registry.npmmir
 ```
 npm run build
 ```
+> 📑   **Note：** 自行打包需要根据自身设备替换项目中的 package.json 文件, 目前提供 **Mac Apple silicon**、**Windows** 打包文件, 文件见 config 文件夹。
 
 ![](./assets/build.png)
 
