@@ -11,7 +11,7 @@
 
 ## 📔 简介
 
-**Ai Talk** 是一款集合了多种大语言模型应用的开源桌面客户端，基于 Electron 构建。当前支持以下大模型：OpenAI ChatGPT、Google Gemini、Quora Poe、月之暗面 Kimi、字节 豆包、阿里 通义千问、腾讯 元宝、百度 文心一言。 [[English Readme\]](https://github.com/Funsiooo/Ai-Talk/doc/README_EN.md)
+**Ai Talk** 是一款集合了多种大语言模型应用的开源桌面客户端，基于 Electron 构建。当前支持以下大模型：OpenAI ChatGPT、Google Gemini、Quora Poe、月之暗面 Kimi、字节 豆包、阿里 通义千问、腾讯 元宝、百度 文心一言。 [[English Readme\]](https://github.com/Funsiooo/Ai-Talk/tree/main/doc/README_EN.md)
 
 <br/>
 
