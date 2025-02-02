@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/bar.css">
+  <title>Bar</title>
+</head>
+
+<body>
+
+  <div class="sidebar-buttons">
+    <button class="sidebar-button" onclick="restoreSidebar()">
+        <img src="../../assets/logo.png"/>
+      </button>
+
+    <button class="sidebar-button" onclick="restoreSidebar()">
+      <img src="../../assets/hide_2.svg" />
+    </button>
+  </div>
+
+  <script>
+    function restoreSidebar() {
+      window.parent.postMessage('restoreSidebar', '*');
+    }
+  </script>
+
+</body>
+</html>

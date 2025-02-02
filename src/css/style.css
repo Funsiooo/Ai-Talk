@@ -190,6 +190,7 @@ button span.icon-text {
 /* 设置选项列表 */
 .settings-list {
   width: 100%;
+  height: 235px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -236,8 +237,6 @@ button span.icon-text {
   padding-bottom: 20px;
 }
 
-
-
 /* 右侧 content 样式 */
 #content {
   width: 100%;
@@ -249,8 +248,3 @@ button span.icon-text {
   justify-content: center;
   align-items: center;
 }
-
-
-
-
-

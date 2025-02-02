@@ -26,8 +26,14 @@
         </p>
       </div>
 
-      <!-- AI 模块 -->
+      <!-- AI 模块 -->  
       <div class="ai_module">
+        <div class="icon-item">
+          <button id="deepseek">
+            <img src="../../assets/deepseek.svg" alt="DeepSeek" class="icon-img"> 深度求索 DeepSeek
+          </button>
+        </div>
+
         <div class="icon-item">
           <button id="kimi">
             <img src="../../assets/kimi.ico" alt="kimi" class="icon-img"> 月之暗面 Kimi
@@ -47,18 +53,6 @@
         </div>
 
         <div class="icon-item">
-          <button id="tenxun">
-            <img src="../../assets/tenxun.png" alt="tenxun" class="icon-img"> 腾讯 元宝
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="wxyy">
-            <img src="../../assets/wxyy.ico" alt="wxyy" class="icon-img"> 百度 文心一言
-          </button>
-        </div>
-
-        <div class="icon-item">
           <button id="openai">
             <img src="../../assets/chatgpt.ico" alt="OpenAI" class="icon-img"> OpenAI ChatGPT
           </button>
@@ -73,6 +67,24 @@
         <div class="icon-item">
           <button id="poe">
             <img src="../../assets/poe.svg" alt="poe" class="icon-img"> Quora Poe
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="claude">
+            <img src="../../assets/claude.png" alt="claude" class="icon-img"> Anthropic Claude
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="tenxun">
+            <img src="../../assets/tenxun.png" alt="tenxun" class="icon-img"> 腾讯 元宝
+          </button>
+        </div>
+
+        <div class="icon-item">
+          <button id="wxyy">
+            <img src="../../assets/wxyy.ico" alt="wxyy" class="icon-img"> 百度 文心一言
           </button>
         </div>
       </div>
@@ -102,11 +114,18 @@
             <img src="../../assets/version.svg" alt="Version Icon"> 关于程序
           </button>
         </div>
+        <div class="settings-item">
+          <button id="hide-btn">
+            <img src="../../assets/hide.svg" alt="Hide Icon"> 隐藏边栏
+          </button>
+        </div>
       </div>
     </div>
 
+
     <!-- 右边显示区域 -->
-    <div id="content">
+    <div id="content">    
+      <div id="bar-container" style="display: none; width: 50px; height: 100vh;"></div>  
       <webview id="webview" src="second.html" style="width: 100%; height: 100vh;"></webview>
     </div>
   </div>

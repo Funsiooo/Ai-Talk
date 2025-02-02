@@ -1,0 +1,36 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+  }
+
+  /* 侧边栏按钮容器 */
+  .sidebar-buttons {
+    position: fixed;
+    top: 10px;           /* 保持顶部距离 */
+    left: 50%;           /* 水平居中 */
+    transform: translateX(-50%); /* 通过平移使容器水平居中 */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+
+  /* 按钮样式 */
+  .sidebar-button {
+    border: none;        /* 去掉边框 */
+    background: none;    /* 去掉背景 */
+    padding: 0;          /* 去掉内边距 */
+    cursor: pointer;    /* 设置为手型光标 */
+    outline: none;       /* 去掉点击后的轮廓 */
+  }
+
+  /* 图标大小 */
+  .sidebar-button img {
+    width: 25px;  /* 图标宽度 */
+    height: 25px; /* 图标高度 */
+  }

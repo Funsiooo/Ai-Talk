@@ -9,7 +9,7 @@ function createWindow() {
   // 创建主窗口
   mainWindow = new BrowserWindow({
     width: 1260,
-    height: 830,
+    height: 840,
     icon: 'assets/logo.ico',
     webPreferences: {
       devTools: false,
@@ -131,6 +131,12 @@ function createVersionWindow() {
 // 监听渲染进程发送的请求来打开窗口
 ipcMain.handle('open-version-dialog', () => {
   createVersionWindow();
+});
+
+
+// 在main.js的ipcMain部分添加
+ipcMain.on('restore-sidebar-request', () => {
+  mainWindow.webContents.send('restore-sidebar');
 });
 
 app.whenReady().then(() => {

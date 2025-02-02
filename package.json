@@ -1,6 +1,6 @@
 {
   "name": "Ai Talk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
@@ -22,7 +22,9 @@
         {
           "name": "@electron-forge/maker-zip",
           "config": {
-            "platforms": ["darwin"]
+            "platforms": [
+              "darwin"
+            ]
           }
         }
       ]
@@ -34,6 +36,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^7.6.0",
     "@electron-forge/maker-deb": "^7.6.0",
+    "@electron-forge/maker-dmg": "^7.6.1",
     "@electron-forge/maker-rpm": "^7.6.0",
     "@electron-forge/maker-squirrel": "^7.6.0",
     "@electron-forge/maker-zip": "^7.6.0",

@@ -6,5 +6,6 @@ contextBridge.exposeInMainWorld("electron", {
   openProxyDialog: () => ipcRenderer.invoke('open-proxy-dialog'),  // 弹出代理设置窗口
   setProxy: (proxyAddress) => ipcRenderer.invoke('set-proxy', proxyAddress),  // 设置代理
   clearProxy: () => ipcRenderer.invoke('clear-proxy'),  // 清除代理
-  openVersionDialog: () => ipcRenderer.invoke('open-version-dialog')  // 清除代理
+  openVersionDialog: () => ipcRenderer.invoke('open-version-dialog'),  // 清除代理
+  restoreSidebar: () => ipcRenderer.send('restore-sidebar-request')
 });
