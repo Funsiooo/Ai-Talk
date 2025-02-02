@@ -11,7 +11,7 @@
 
 ## 📔 Introduction
 
-**Ai Talk** is an open source desktop client that integrates a variety of large language model applications and is built on Electron. Currently supports the following large models: OpenAI ChatGPT、Google Gemini、Quora Poe、Anthropic  Claude、Moonshot Kimi、Douyin DouBao、ShenduQiusuo DeepSeek、Alibaba Cloud Qwen、Tencent yuanbao、Baidu WenXinYiYan。  [[Chinese Readme\]](https://github.com/Funsiooo/Ai-Talk/README.md)
+**Ai Talk** is an open source desktop client that integrates a variety of large language model applications and is built on Electron. Currently supports the following large models: OpenAI ChatGPT、Google Gemini、Quora Poe、Anthropic  Claude、Moonshot Kimi、Douyin DouBao、ShenduQiusuo DeepSeek、Alibaba Cloud Qwen、Tencent yuanbao、Baidu WenXinYiYan。  [[Chinese Readme\]](./README.md)
 
 <br/>
 
