@@ -125,3 +125,16 @@ npm run build
 
 ![](./assets/build.png)
 
+<br/>
+
+## 🛎️ FQA
+
+Mca 用户在下载安装 [Ai.Talk-1.0.2-arm64.dmg](https://github.com/Funsiooo/Ai-Talk/releases/download/v1.0.2/Ai.Talk-1.0.2-arm64.dmg) 后出现报错。这是由于新版 macOS 系统默认禁止安装第三方未验证的应用，且系统隐藏了“任何来源”的选项。用户需先在终端执行以下命令，重新启用该选项，之后再次打开应用即可正常使用。
+
+```
+sudo spctl --master-disable
+```
+
+
+
+![](./assets/fqa.png)
