@@ -1,4 +1,4 @@
-# <img src="./assets/title.png" alt="Ai_Talk" style="width: 50px;"> Ai Talk
+# <img src="./assets/title.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Ai Talk</span>**
 
 
 <p align="left">
@@ -11,91 +11,46 @@
 
 ## 📔 简介
 
-**Ai Talk** 是一款集合了多种大语言模型应用的开源桌面客户端，基于 Electron 构建。当前支持以下大模型：OpenAI ChatGPT、Google Gemini、Quora Poe、Anthropic Claude、深度求索 DeepSeek、月之暗面 Kimi、字节 豆包、阿里 通义千问、腾讯 元宝、百度 文心一言。 [[English Readme\]](./doc/README_EN.md)
+**Ai Talk** 是一款基于 Electron 框架开发的开源桌面客户端，集成了多个主流大语言模型与实用应用入口。当前支持的大模型入口包括：DeepSeek、通义千问、元宝、豆包、Kimi、文心一言、ChatGPT、Gemini、Perplexity、Claude、Poe、Manus、Grok、Meta、Sciencepal 以及 Copilot。其他应用入口：DeepL Translator、有道翻译和 Bing。
 
-<br/>
+</br>
 
-> 📑   **Note：** OpenAi ChatGPT、Google Gemini 、Quora Poe 、Claude 需要设置网络代理才能正常访问。
+> 📑   **Note：** 国内用户使用 Chatgpt、Gemini、Perplexity、Claude、Poe、Manus、Grok、Meta、Copilot 需要设置网络代理才能正常访问。
 
-
-<br/>
+</br>
 
 ## 📟 功能介绍
 
-**界面：** 程序主要由两部分组成：左侧的侧边栏和右侧的显示区域。点击左侧的某个大模型，右侧将加载该大模型的官方页面，即可开始对话。
+### 基本使用
+
+程序界面主要分为两个部分：“左侧侧边栏” 与 “右侧内容显示区”。当点击侧边栏中的某个大模型图标时，右侧区域将自动载入该模型的官方网页界面。登录个人账户后，即可直接在该页面内进行对话与交互。
 
 ![example1](./assets/example1.png)
 
 ![example2](./assets/example2.png)
 
-**网络代理：** 由于 **OpenAI ChatGPT** 、 **Google Gemini** 、**Quora Poe** 模型需要访问国外网站，因此在使用之前，需要在左侧侧边栏下方的 “网络设置” 中配置代理网络。目前只支持 **HTTP** 和 **HTTPS** 协议。配置步骤如下：
-
-
+**网络代理：** 由于 **ChatGPT**、**Gemini**、**Perplexity**、**Claude**、**Poe**、**Manus**、**Grok**、**Meta AI**、**Copilot** 等模型网络限制，因此国内用户使用之前，需要在左侧侧边栏下方的 "网络设置" 中配置代理网络。目前只支持 **HTTP** 和 **HTTPS** 协议。配置步骤如下：
 
 > - 点击 “网络设置” ，在弹窗输入代理地址，如：本地开启了 7890 端口为代理网络端口，填入 http://127.0.0.1:7890 
 > - 点击 “设置代理” ，完成网络设置
 > - 如网络设置输入错误，点击 “清除代理” 即可恢复程序默认设置
-> - 设置完毕后点击 “关闭” 
+> - 设置完毕后点击 “关闭” 再次点击模型图标进行访问即可
 
 ![example3](./assets/example3.png)
 
-## 📸 大模型使用规则
+### 会话分身
 
-> 深度求索 DeepSeek
+此前版本仅支持单一会话，无法方便地对比不同模型的回答，也不能直接访问模型输出中的参考链接。新增的 **会话分身功能** 有效解决了这些限制。在当前版本中，用户可以**通过会话分身同时打开多个模型会话**。
 
-消息条数限制：免费使用，不限次数。
+![fenshen1](./assets/fenshen1.png)
 
+该版本支持直接访问模型回答中的参考链接，用户可在当前应用内直接跳转浏览，无需额外启动浏览器。
 
+![fenshen2](./assets/fenshen2.png)
 
-> 月之暗面 Kimi
+为方便轻办公与信息检索，该版本也引入了 Bing 搜索入口，可以直接在当前程序实现类浏览器搜索
 
-消息条数限制：免费使用，不限次数。
-
-
-
-> 通义千问
-
-消息条数限制：免费使用，不限次数。
-
-
-
-> 字节 豆包
-
-消息条数限制：免费使用，不限次数。
-
-
-
-> 腾讯 元宝
-
-消息条数限制：免费使用，不限次数。
-
-
-
-> 百度 文心一言
-
-消息条数限制：3.5 模型免费使用，其它模型存在次数限制。
-
-
-
-> OpenAi ChatGPT
-
-消息条数限制：免费套餐用户在 5 小时内只能使用 GPT-4o 的有限次数，使用完毕回退其它模型，如：GPT-3.5 。【 官方文档链接：https://help.openai.com/en/articles/9275245-using-chatgpt-s-free-tier-faq#h_43513320b9】
-
-
-
-> Google  Gemini
-
-消息条数限制：1.5 flash 免费使用，存在次数限额，限额不详。【官方文档：https://gemini.google.com/faq】
-
-
-
-> Quora Poe
-
-消息条数限制：存在次数限额，限额不详。
-
-
-
-<br/>
+![fenshen5](./assets/fenshen5.png)
 
 ## ⌨️ 源码启动
 
@@ -149,8 +104,6 @@ cd Ai-Talk
 npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 ```
 
-
-
 - 安装 electron-forge/cli
 
 ```
@@ -163,7 +116,7 @@ npm install --save-dev @electron-forge/cli -d --registry=https://registry.npmmir
 npm install --save-dev  -d @electron-forge/maker-dmg --registry=https://registry.npmmirror.com
 ```
 
-- Ai Talk 目录下执行，打包文件存放在 out 目录下（打包过程中若出现报错可忽略）
+- Ai Talk 目录下执行，打包文件存放在 out 目录下（打包过程中若出现报错可忽略，若打包失败，可以尝试执行 `npm cache clean --force` 命令清理缓存，随后重新运行所有的打包命令）
 
 ```
 npm run build
@@ -171,17 +124,4 @@ npm run build
 > 📑   **Note：** 自行打包需要根据自身设备替换项目中的 package.json 文件, 目前提供 **Mac Apple silicon**、**Windows** 打包文件, 文件见 config 文件夹。
 
 ![](./assets/build.png)
-
-<br/>
-
-## 🛎️ FQA
-```
-1、更新日志见 doc/log.md
-```
-
-## ☕ 请作者喝杯咖啡
-
-如果你觉得本项⽬帮助了你，不妨考虑请作者喝⼀杯咖啡！
-
-<img src="./assets/wechat.png" alt="示例图片" style="width: 500px; float: left; ">
 

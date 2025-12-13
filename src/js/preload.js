@@ -7,5 +7,9 @@ contextBridge.exposeInMainWorld("electron", {
   setProxy: (proxyAddress) => ipcRenderer.invoke('set-proxy', proxyAddress),  // 设置代理
   clearProxy: () => ipcRenderer.invoke('clear-proxy'),  // 清除代理
   openVersionDialog: () => ipcRenderer.invoke('open-version-dialog'),  // 清除代理
-  restoreSidebar: () => ipcRenderer.send('restore-sidebar-request')
+  restoreSidebar: () => ipcRenderer.send('restore-sidebar-request'),
+  detachWebview: (url) => ipcRenderer.invoke('detach-webview', url), //打开浏览器
+   // 监听 main 发来的恢复 URL 事件
+  restoreWebviewUrl: (callback) =>
+    ipcRenderer.on("restore-webview-url", (event, url) => callback(url)),
 });

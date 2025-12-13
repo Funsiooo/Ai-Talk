@@ -4,9 +4,10 @@ const path = require('path')
 let mainWindow;
 let proxyWindow;
 let versionWindow
+let detachedWindows = new Set(); // 用于跟踪所有detach-webview创建的窗口
 
+// 创建主窗口
 function createWindow() {
-  // 创建主窗口
   mainWindow = new BrowserWindow({
     width: 1260,
     height: 840,
@@ -27,13 +28,15 @@ function createWindow() {
   // 隐藏electron menu
   mainWindow.setMenu(null);
 
-
   // 加载初始页面
   mainWindow.loadFile(path.join(__dirname, 'src', 'view', 'index.html'));
 
+  // 主窗口关闭时，关闭所有detach-webview创建的窗口
   mainWindow.on('closed', () => {
+    closeAllDetachedWindows();
     mainWindow = null;
   });
+
 
 }
 
@@ -63,6 +66,16 @@ function createProxyWindow() {
   proxyWindow.on('closed', () => {
     proxyWindow = null;
   });
+}
+
+// 关闭所有detach-webview创建的窗口
+function closeAllDetachedWindows() {
+  for (const win of detachedWindows) {
+    if (win && !win.isDestroyed()) {
+      win.close();
+    }
+  }
+  detachedWindows.clear();
 }
 
 // 监听渲染进程发送的请求来打开代理输入窗口
@@ -97,6 +110,39 @@ ipcMain.handle('clear-proxy', () => {
     .catch(err => {
       console.error('清除代理失败:', err);
     });
+});
+
+// 会话分身功能，将 Electron 会话窗口独立到桌面
+ipcMain.handle("detach-webview", (event, url) => {
+  if (!url) return;
+
+  // 使用当前会话
+  const ses = mainWindow.webContents.session;
+
+  const win = new BrowserWindow({
+    width: 1080,
+    height: 745,
+    icon: 'assets/logo.ico',
+    webPreferences: {
+      session: ses,
+      nodeIntegration: false,
+      contextIsolation: true
+    }
+  });
+
+  win.setMenu(null);
+  win.loadURL(url);
+
+   // 将窗口添加到跟踪集合
+  detachedWindows.add(win);
+
+  // 窗口关闭时从集合中移除并通知渲染进程恢复 webview
+  win.on("closed", () => {
+    detachedWindows.delete(win);
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send("restore-webview-url", url);
+    }
+  });
 });
 
 

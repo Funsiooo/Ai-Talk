@@ -25,8 +25,8 @@ body, html {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); /* 右侧有轻微阴影 */
-  border-right: 1px solid #ddd; /* 右边框 */
+  box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1); /* 右侧有轻微阴影 */
+  border-right: 0.5px solid #ddd; /* 右边框 */
 }
 
 /* logo 样式 */
@@ -63,7 +63,7 @@ body, html {
 }
 
 .dialogue_text {
-  font-size: 14px;
+  font-size: 13px;
   margin-bottom: 10px;
   display: flex;
   justify-content: space-between;
@@ -74,7 +74,6 @@ body, html {
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 更强的阴影 */
   transition: box-shadow 0.3s ease;
-  
 }
 
 .dialogue img {
