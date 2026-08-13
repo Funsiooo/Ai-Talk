@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>官方模型直达</title>
+  <link rel="stylesheet" href="../css/module.css">
+</head>
+<body>
+  <div class="module-page">
+
+    <!-- ===== 关闭按钮（右上角固定，点击返回模式选择页） ===== -->
+    <button class="module-close-btn" id="module-close-btn" title="关闭并返回">&times;</button>
+
+    <!-- ===== 头部 ===== -->
+    <header class="module-header">
+      <h1 class="module-title">官方模型</h1>
+    </header>
+
+    <!-- ===== 分组 1：对话大模型 ===== -->
+    <section class="model-group">
+      <h2 class="group-title">国内大模型</h2>
+      <div class="model-grid">
+        <button class="model-item" data-url="https://chat.deepseek.com/">
+          <span class="model-logo"><img src="../../assets/deepseek.svg" alt="DeepSeek"></span>
+          <span class="model-name">深度求索 DeepSeek</span>
+        </button>
+        <button class="model-item" data-url="https://www.tongyi.com/">
+          <span class="model-logo"><img src="../../assets/tyqw.png" alt="通义千问"></span>
+          <span class="model-name">阿里 通义千问</span>
+        </button>
+        <button class="model-item" data-url="https://yuanbao.tencent.com/chat/">
+          <span class="model-logo"><img src="../../assets/tenxun.png" alt="腾讯元宝"></span>
+          <span class="model-name">腾讯 元宝</span>
+        </button>
+        <button class="model-item" data-url="https://www.doubao.com/">
+          <span class="model-logo"><img src="../../assets/doubao.png" alt="豆包"></span>
+          <span class="model-name">字节 豆包</span>
+        </button>
+        <button class="model-item" data-url="https://kimi.moonshot.cn/">
+          <span class="model-logo"><img src="../../assets/kimi.ico" alt="Kimi"></span>
+          <span class="model-name">月之暗面 Kimi</span>
+        </button>
+        <button class="model-item" data-url="https://www.zhipuai.cn/">
+          <span class="model-logo"><img src="../../assets/zhipu.png" alt="智谱 GLM"></span>
+          <span class="model-name">智谱 GLM</span>
+        </button>
+        <button class="model-item" data-url="https://agent.minimaxi.com/">
+          <span class="model-logo"><img src="../../assets/minimax.png" alt="Minimax"></span>
+          <span class="model-name">Minimax Ai</span>
+        </button>
+        <button class="model-item" data-url="https://aistudio.xiaomimimo.com/#/c">
+          <span class="model-logo"><img src="../../assets/mimo.png" alt="Mimo"></span>
+          <span class="model-name">小米 Mimo</span>
+        </button>
+        <button class="model-item" data-url="https://yiyan.baidu.com/">
+          <span class="model-logo"><img src="../../assets/wxyy.ico" alt="文心一言"></span>
+          <span class="model-name">百度 文心一言</span>
+        </button>
+      </div>
+    </section>  
+
+    <!-- ===== 分组 2：国际 AI ===== -->
+    <section class="model-group">
+      <h2 class="group-title">国际大模型</h2>
+      <div class="model-grid">
+        <button class="model-item" data-url="https://chatgpt.com/">
+          <span class="model-logo"><img src="../../assets/chatgpt.ico" alt="OpenAI"></span>
+          <span class="model-name">OpenAI ChatGPT</span>
+        </button>
+        <button class="model-item" data-url="https://gemini.google.com/">
+          <span class="model-logo"><img src="../../assets/google.svg" alt="Gemini"></span>
+          <span class="model-name">Google Gemini</span>
+        </button>
+        <button class="model-item" data-url="https://www.perplexity.ai/">
+          <span class="model-logo"><img src="../../assets/perplexity.ico" alt="Perplexity"></span>
+          <span class="model-name">Perplexity AI</span>
+        </button>
+        <button class="model-item" data-url="https://claude.ai/">
+          <span class="model-logo"><img src="../../assets/claude.png" alt="Claude"></span>
+          <span class="model-name">Anthropic Claude</span>
+        </button>
+        <button class="model-item" data-url="https://x.ai/grok">
+          <span class="model-logo"><img src="../../assets/grok.ico" alt="Grok"></span>
+          <span class="model-name">xAI Grok</span>
+        </button>
+        <button class="model-item" data-url="https://poe.com/">
+          <span class="model-logo"><img src="../../assets/poe.svg" alt="Poe"></span>
+          <span class="model-name">Quora Poe</span>
+        </button>
+        <button class="model-item" data-url="https://www.meta.ai/">
+          <span class="model-logo"><img src="../../assets/meta.ico" alt="Meta"></span>
+          <span class="model-name">Meta Ai</span>
+        </button>
+        <button class="model-item" data-url="https://manus.im/">
+          <span class="model-logo"><img src="../../assets/manus.ico" alt="Manus"></span>
+          <span class="model-name">蝴蝶效应 Manus</span>
+        </button>
+        <button class="model-item" data-url="https://sciencepal.ai/">
+          <span class="model-logo"><img src="../../assets/sciencepal.png" alt="Sciencepal"></span>
+          <span class="model-name">Sciencepal Ai</span>
+        </button>
+        <button class="model-item" data-url="https://copilot.microsoft.com/">
+          <span class="model-logo"><img src="../../assets/copilot.ico" alt="Copilot"></span>
+          <span class="model-name">Microsoft Copilot</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== 分组 3：翻译 ===== -->
+    <section class="model-group">
+      <h2 class="group-title">翻译工具</h2>
+      <div class="model-grid">
+        <button class="model-item" data-url="https://www.deepl.com/">
+          <span class="model-logo"><img src="../../assets/deepl.png" alt="DeepL"></span>
+          <span class="model-name">DeepL Translator</span>
+        </button>
+        <button class="model-item" data-url="https://fanyi.youdao.com/#/TextTranslate">
+          <span class="model-logo"><img src="../../assets/youdao.ico" alt="有道翻译"></span>
+          <span class="model-name">网易 有道翻译</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ===== 分组 4：搜索 ===== -->
+    <section class="model-group">
+      <h2 class="group-title">搜索引擎</h2>
+      <div class="model-grid">
+        <button class="model-item" data-url="https://www.bing.com/">
+          <span class="model-logo"><img src="../../assets/bing.ico" alt="Bing"></span>
+          <span class="model-name">必应 Bing</span>
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===== 点击模型：跳转官方页面（与左侧边栏逻辑一致） ===== -->
+  <script>
+  (function() {
+    'use strict';
+    var items = document.querySelectorAll('.model-item');
+    Array.prototype.forEach.call(items, function(btn) {
+      btn.addEventListener('click', function() {
+        var url = btn.getAttribute('data-url');
+        if (url) {
+          window.location.href = url;
+        }
+      });
+    });
+
+    // 右上角关闭：返回模式选择页（second.html）
+    var closeBtn = document.getElementById('module-close-btn');
+    if (closeBtn) {
+      closeBtn.addEventListener('click', function() {
+        window.location.replace('second.html');
+      });
+    }
+  })();
+  </script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-/* 全局样式 */
+/* ---- 全局重置 ---- */
 * {
     margin: 0;
     padding: 0;
@@ -6,170 +6,261 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #e9ecef; /* 淡灰色背景 */
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable', 'Segoe UI', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    /* 纯白底色 */
+    background-color: #ffffff;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 确保占满整个视口高度 */
-    margin: 0;  
+    min-height: 100vh;
 }
 
+/* ---- 主容器 ---- */
 .main_display {
     display: flex;
-    flex-direction: row; /* 水平排列窗口 */
-    flex-wrap: wrap; /* 使元素在空间不足时自动换行 */
-    justify-content: center; /* 水平居中对齐 */
-    align-items: center; /* 垂直居中对齐 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    padding: 0px;
-    background-color: #ffffff; /* 白色背景 */
-    border-radius: 0px;
-    box-shadow: 0 0px 0px rgba(0, 0, 0, 0.1); /* 柔和的阴影效果 */
-    width: 100%;  /* 调整为 100% 宽度 */
-    height: 100%;
+    /* 上下留白均衡 */
+    padding: 80px 24px 64px;
+    width: 100%;
+    /* 限制内容宽度 */
+    max-width: 680px;
 }
 
-/* 新增窗口的样式 */
-.text_windwo {
-    /* background-color: #f8f9fa; 淡灰色背景 */
-    border: 0px solid #ddd;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 8px;
-    width: 100%;  /* 保持原样 */
-    min-height: 200px;
-    text-align: center;
+/* ====== 头部文案区 ====== */
+.header-section {
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;  /* 内容底部对齐 */
     align-items: center;
-    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); */
-    font-size: 18px;
+    gap: 14px;
+    margin-bottom: 56px;
+    width: 100%;
 }
 
-/* 新增窗口的样式 */
-.window {
-    flex-direction: row; /* 水平排列 */
-    background-color: #ffffff; /* 淡灰色背景 */
-    border: 0px solid #ddd;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 20px;
-    width: 240px; /* 每个窗口的固定宽度 */
-    height: 150px; /* 高度保持一致 */
+.big-title {
+    /* 32px */
+    font-size: 32px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    /* 打字机开始前占位一行，避免下方内容跳动 */
+    min-height: 1.25em;
+}
+
+.sub-title {
+    font-size: 15px;
+    font-weight: 400;
+    color: #555555;
+    line-height: 1.6;
+    max-width: 480px;
+    /* 打字机开始前占位一行，避免下方内容跳动 */
+    min-height: 1.6em;
+}
+
+/* ====== 三个能力展示块 ====== */
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    margin-bottom: 48px;
+}
+
+.feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 24px;
+    background-color: #f8f9fb;
+    border-radius: 16px;
     text-align: left;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-size: 18px;
-    margin-top: -350px; /* 向上移动 20px */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.window img{
-    width: 18px; /* 图标更大 */
-    height: 18px;
-    margin-right: 12px;
+.feature-item:hover {
+    background-color: #f1f3f7;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
 }
 
-
-.title_text {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    margin-top: 10px;
+/* 圆角方形容器，icon 在左 */
+.feature-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    /* 浅灰 */
+    background-color: #eef0f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
 }
 
-/* 小字文本 */
-.describe_text {
-    font-size: 12px;    
-    color: #888;
-    margin-top: 10px;
+.feature-icon img {
+    width: 22px;
+    height: 22px;
+    opacity: 0.65;
 }
 
-/* 小字文本 */
-.big-text {
-    font-size: 28px;
-    font-weight: bold;
-    color: #333;
-    margin-top: 10px;
+/* icon 右侧文字 */
+.feature-text {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 0;
 }
 
-/* 小字文本 */
-.small-text {
+.feature-title {
     font-size: 14px;
-    color: #888;
-    margin-top: 10px;
+    font-weight: 600;
+    /* 深色 */
+    color: #1a1a2e;
+    line-height: 1.3;
 }
 
-/* 打字机效果 */
-#typing-text {
-    display: inline-block;
-    white-space: nowrap; /* 防止文本换行 */
-    overflow: hidden; /* 隐藏多余的文字 */
-
-    width: 0; /* 初始宽度为 0 */
-    border-right: 0px solid #333; /* 模拟打字机的光标 */
-    animation: typing 2s steps(20) 1s forwards, blink 0.75s step-end infinite, loopTyping 4s 1s infinite; /* 打字效果和光标闪烁，循环 */
+.feature-desc {
+    font-size: 12px;
+    font-weight: 400;
+    /* 中灰 */
+    color: #7a828a;
+    line-height: 1.7;
 }
 
-/* 打字机效果 */
-#typing-text_2 {
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    width: 0;
-    border-right: 0px solid #333;
-    animation: typing 4s steps(40) 1s forwards, blink 0.75s step-end infinite, loopTyping 6s 1s infinite;
+/* ====== 双按钮区 ====== */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
 }
 
-/* 打字效果 */
-@keyframes typing {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 100%;
-    }
+/* 统一高度与圆角 */
+.mode-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    padding: 0 32px;
+    font-size: 14px;
+    font-weight: 500;
+    border-radius: 23px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1.5px solid transparent;
+    outline: none;
+    user-select: none;
+    /* 保证两个按钮视觉一致 */
+    min-width: 140px;
 }
 
-/* 光标闪烁效果 */
-@keyframes blink {
-    0%, 50% {
-        border-color: transparent;
-    }
-    50.1%, 100% {
-        border-color: #333;
-    }
+/* 默认模式 — 实心填充 */
+.mode-btn-primary {
+    /* 深色 */
+    background-color: #1a1a2e;
+    /* 白色 */
+    color: #ffffff;
+    border-color: #1a1a2e;
 }
 
-/* 无限循环效果，打字完后重新开始 */
-@keyframes loopTyping {
-    0% {
-        width: 0;
-    }
-    100% {
-        width: 100%;
-    }
+.mode-btn-primary:hover {
+    /* 稍亮 */
+    background-color: #2a2a4a;
+    border-color: #2a2a4a;
+    box-shadow: 0 4px 16px rgba(26, 26, 46, 0.2);
 }
 
-/* 响应式设计 */
-@media (max-width: 480px) {
+.mode-btn-primary:active {
+    /* 缩放反馈 */
+    transform: scale(0.97);
+}
+
+/* API 模式 — 描边镂空 */
+.mode-btn-outline {
+    /* 透明 */
+    background-color: transparent;
+    /* 深色 */
+    color: #1a1a2e;
+    /* 深灰描边 */
+    border-color: #c8ccd4;
+}
+
+.mode-btn-outline:hover {
+    /* 边框加深 */
+    border-color: #1a1a2e;
+    background-color: #f8f9fb;
+}
+
+.mode-btn-outline:active {
+    /* 缩放反馈 */
+    transform: scale(0.97);
+}
+
+/* ---- 响应式 ---- */
+@media (max-width: 520px) {
     .main_display {
-        padding: 15px;
-        flex-direction: column; /* 在小屏幕上换成垂直排列 */
+        padding: 48px 20px 40px;
     }
 
-    p {
-        font-size: 18px;
+    .big-title {
+        font-size: 24px;
     }
 
-    .input-box {
+    .sub-title {
+        font-size: 13px;
+    }
+
+    .btn-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .mode-btn {
         width: 100%;
+        max-width: 280px;
     }
+}
 
-    /* 窗口样式在小屏幕下调整 */
-    .window {
-        width: 100%;
-        margin: 10px 0;
-    }
+/* ====== 打字机光标动画 ====== */
+.cursor {
+    display: inline;
+    font-weight: 400;
+    /* 与标题色一致 */
+    color: #000000;
+    /* 1s 周期 */
+    animation: cursor-blink 1s step-end infinite;
+}
+
+.sub-title .cursor {
+    color: #555555;
+}
+
+@keyframes cursor-blink {
+    0%, 50% { opacity: 1; }
+    50.1%, 100% { opacity: 0; }
+}
+
+/* ====== 并行入场：能力区 / 按钮组（与打字机同帧启动，无先后依赖） ====== */
+.feature-list,
+.btn-group {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.feature-list.is-visible,
+.btn-group.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* 渐出完成后由 JS 执行跳转 / 模式切换
+   置于 .is-visible 之后，渐出状态优先生效 */
+.btn-group.is-leaving {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.26s ease, transform 0.26s ease;
+    pointer-events: none;
 }

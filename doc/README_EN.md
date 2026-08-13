@@ -1,53 +1,153 @@
-# <img src="/Users/ooooo/Files/tools/notebooks/images/title-5509252.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Ai Talk</span>**
-
+# <img src="/Users/ooooo/Files/tools/notebooks/images/title-6538184.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Hello, Let's Ai Talk !</span>**
 
 <p align="left">
-  <img alt="GitHub License" src="https://img.shields.io/github/license/Funsiooo/Ai-Talk?color=%23%2067b93d">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/Funsiooo/Ai-Talk?color=%2523%252067b93d">
   <img alt="GitHub Release" src="https://img.shields.io/github/v/release/Funsiooo/Ai-Talk?color=%23%2067b93d">
   <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/Funsiooo/Ai-Talk/total">
   <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/Funsiooo/Ai-talk">
   <img alt="GitHub forks" src="https://img.shields.io/github/forks/Funsiooo/Ai-Talk">
 </p>
-## 📔  Introduction
-
-**Ai Talk** is an open-source desktop client built on the Electron framework, integrating multiple mainstream large language models and practical application gateways. Currently supported large language models include: DeepSeek, Tongyi Qianwen, Yuanbao, Doubao, Kimi, Wenxin Yiyuan, ChatGPT, Gemini, Perplexity, Claude, Poe, Manus, Grok, Meta, Sciencepal, and Copilot. Additional application access points: DeepL Translator, Youdao Translation, and Bing. [[Chinese Readme\]](https://github.com/Funsiooo/Ai-Talk/README.md)
 
 
 
-## 📟 Program Introduction
+## 📔 Introduction
 
-### Basic Usage
+**Ai Talk** is a dual-scenario AI dialogue client for both **individuals** and **enterprises**. Built on Electron, it achieves a unified cross-platform experience, aggregating mainstream large models and private APIs for out-of-the-box use. It features built-in **DLP data leakage prevention** and **operation audit trail**, balancing AI efficiency with data security and compliance. Supports macOS, Windows, and Linux platforms; install and run immediately.
 
-The program interface is primarily divided into two sections: the “left sidebar” and the “right content display area.” When you click an icon for a large model in the sidebar, the right area will automatically load that model's official webpage interface. After logging into your personal account, you can directly engage in conversations and interactions within that page.
+</br>
 
-![example1](../assets/example1.png)
+**✨ Key Features**
 
-![example2](../assets/example2.png)
+<table width="100%" border="0" cellpadding="14" cellspacing="8">
+  <tr>
+    <td align="center" valign="middle" style="border: 1px solid #e1e4e8; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+      <img src="../assets/md1.svg" width="28" height="28" alt="DLP 防泄漏">
+      <div style="font-weight: 600; margin-top: 6px;">DLP leak prevention</div>
+    </td>
+    <td align="center" valign="middle" style="border: 1px solid #e1e4e8; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+      <img src="../assets/md2.svg" width="28" height="28" alt="操作审计">
+      <div style="font-weight: 600; margin-top: 6px;">Operational audit</div>
+    </td>
+    <td align="center" valign="middle" style="border: 1px solid #e1e4e8; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+      <img src="../assets/md3.svg" width="28" height="28" alt="会话增强">
+      <div style="font-weight: 600; margin-top: 6px;">Session enhancement</div>
+    </td>
+    <td align="center" valign="middle" style="border: 1px solid #e1e4e8; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+      <img src="../assets/md4.svg" width="28" height="28" alt="Skill 扩展">
+      <div style="font-weight: 600; margin-top: 6px;">Skill Expansion</div>
+    </td>
+    <td align="center" valign="middle" style="border: 1px solid #e1e4e8; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.06);">
+      <img src="../assets/md5.svg" width="28" height="28" alt="多模型聚合">
+      <div style="font-weight: 600; margin-top: 6px;">Multi-model aggregation</div>
+    </td>
+  </tr>
+</table>
 
-**Network Proxy:** Currently only supports **HTTP** and **HTTPS** protocols. The configuration steps are as follows:
+<br/>
 
-> - Click "网络设置" and enter the proxy address in the pop-up window. For example, if port 7890 is enabled locally as the proxy network port, enter [http://127.0.0.1:7890](http://127.0.0.1:7890/)
-> - Click "设置代理" to complete the network settings
-> - If the network settings are entered incorrectly, click "清除网络" to restore the program default settings
-> - Click "关闭" after setting.
+![md6](/Users/ooooo/Files/tools/notebooks/images/md6.png)
 
-![example3](../assets/example3.png)
+## 📟 Feature Introduction
 
-### Split Sessions
+### Default Mode
 
-Previous versions only supported single sessions, making it inconvenient to compare responses from different models and preventing direct access to reference links within model outputs. The newly added **Split Sessions feature** effectively addresses these limitations. In the current version, users can **open multiple model sessions simultaneously using Split Sessions**.![fenshen1](../assets/fenshen1.png)
+Directly connects to the official large model entry service, ready to use out of the box. Reference links in the model output can be opened and viewed directly within the application. Default mode supports session cloning.
 
-This version supports direct access to reference links within model responses, allowing users to navigate directly within the current application without launching an additional browser.
+![default](/Users/ooooo/Files/tools/notebooks/images/md7.png)
 
-![fenshen2](../assets/fenshen2.png)
+### API Mode
 
-To facilitate lightweight office tasks and information retrieval, this version also introduces a Bing search portal, enabling browser-like searches directly within the current application.
+Suitable for internal enterprise model API access. The application has a built-in session memory system (it does not remember data across sessions, but can reference content across sessions) and context compression.
 
-![fenshen5](../assets/fenshen5.png)
+✨ **"Sensitive Data Monitoring for External Sending"** detection is enabled by default. It will automatically issue an alert before sending sensitive data to the AI large model; if the user still chooses to send it, the sensitive content will be anonymized before sending. The detection rules support matching sensitive data types within the enterprise using custom regular expressions, flexibly adapting to the compliance needs of different enterprises.
 
-## ⌨️  Source code startup
+![api](/Users/ooooo/Files/tools/notebooks/images/md8.png)
 
-- Install nodejs
+#### Sensitive Data Outgoing Transmission Detection (DLP)
+
+In API mode, the system automatically scans content before data is sent out, matching it against sensitive information patterns (such as ID card numbers, mobile phone numbers, bank card numbers, enterprise-defined rules, etc.). When a detection is successful:
+
+- The detected sensitive content is displayed in full plaintext, allowing users to clearly understand the data about to be sent;
+
+- Users can choose to **block transmission** or **continue transmission**;
+
+- If the user chooses to continue transmission, the system will anonymize the sensitive data before sending it out.
+
+Detection rules are managed through `config/dlp-rules.json`, supporting custom regular expressions and capable of matching any sensitive data type defined internally by the enterprise.
+
+![data](/Users/ooooo/Files/tools/notebooks/images/md9.png)
+
+![data2](/Users/ooooo/Files/tools/notebooks/images/md10.png)
+
+![data2](/Users/ooooo/Files/tools/notebooks/images/md11.png)
+
+#### Operation Audit Log
+
+The system records complete operation logs, meeting compliance audit requirements:
+
+- Program sending and access behavior records
+
+- DLP detection records (hit content, anonymized content, user decisions)
+
+- Token consumption statistics
+
+- Request URL, model name, response status, time consumption, etc.
+
+Logs are stored in plaintext and can be viewed and exported from the application's "**Data Panel**".
+
+![md12](/Users/ooooo/Files/tools/notebooks/images/md12.png)
+
+#### Skill Shop
+
+Supports importing custom skills through the Skill Shop. Skills are written in a standard format and can declare the allowed directory ranges.
+
+- Executes within a secure sandbox, allowing only read access to authorized directories.
+
+- Read-only, no write access; unauthorized directories are strictly prohibited from being read.
+
+![skill](/Users/ooooo/Files/tools/notebooks/images/skill-6538184.jpg)
+
+#### Session Memory and Context Management
+
+The API mode includes a built-in session memory system that supports referencing historical content across sessions (by default, it does not support cross-session memory) and features a context compression mechanism that automatically simplifies content when it exceeds the window size, maintaining consistency and reducing token consumption.
+
+![14](/Users/ooooo/Files/tools/notebooks/images/md14.png)
+
+
+
+#### Prompt Template Library
+
+Built-in Prompt template library, supporting custom templates and categorized management to reduce repetitive input of frequently used prompts; also provides Prompt optimization capabilities to help users express their needs more clearly and accurately.
+
+![15](/Users/ooooo/Files/tools/notebooks/images/md15.png)
+
+#### Online Search
+
+Some models support online search. After selecting a model that can be accessed online, click the "Online Search" button to start the online search.
+
+![16](/Users/ooooo/Files/tools/notebooks/images/md16.png)
+
+## 🔐 Data and Security
+
+- Program data is **stored locally** (session logs, configuration files, logs)
+
+- Cross-device data migration is possible via directory copying
+
+- Sensitive data detection is performed locally; DLP judgment and de-identification do not rely on external services.
+
+- Skill execution is read-only throughout and is subject to the "allowed access paths" sandbox constraint.
+
+| platform  | Path                                     |
+| --------- | ---------------------------------------- |
+| macOS DMG | `~/Library/Application Support/Ai Talk/` |
+| Windows   | `%APPDATA%/Ai Talk/`                     |
+| Linux     | `~/.config/Ai Talk/`                     |
+
+
+
+## ⌨️ Start from source code
+
+- Install Node.js
 
 ```
 https://nodejs.org/zh-cn/download
@@ -59,26 +159,24 @@ https://nodejs.org/zh-cn/download
 git clone https://github.com/Funsiooo/Ai-Talk.git
 ```
 
-- Install electron
+- Install Electron
 
 ```
 cd Ai-Talk
 npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 ```
 
-
-- Execute in Ai Talk directory
+- Execute in the Ai Talk directory
 
 ```
 npm start
 ```
 
-<br/>
 
 
-## 📦 To package
+## 📦 Packing Guide
 
-- Install node.js
+- Install Node.js
 
 ```
 https://nodejs.org/zh-cn/download
@@ -103,21 +201,42 @@ npm install electron --save-dev -d --registry=https://registry.npmmirror.com
 npm install --save-dev @electron-forge/cli -d --registry=https://registry.npmmirror.com
 ```
 
-- macos install @electron-forge/maker-dmg
+- macOS requires maker-dmg to be installed
 
 ```
-npm install --save-dev  -d @electron-forge/maker-dmg --registry=https://registry.npmmirror.com
+npm install --save-dev @electron-forge/maker-dmg -d --registry=https://registry.npmmirror.com
 ```
 
-- Execute commands in the Ai Talk directory. Packaged files are stored in the out directory. If errors occur during packaging, you may ignore them. If packaging fails, try running the command `npm cache clean --force` to clear the cache, then rerun all packaging commands.
+- - Windows: MSI packaging requires WiX Toolset v3 to be installed
+
+```
+下载地址：https://github.com/wixtoolset/wix3/releases/tag/wix3112rtm
+建议使用 wix311-binaries.zip，解压后将 bin 目录路径添加到系统环境变量 PATH 中
+```
+
+- - Linux: deb/rpm packaging
+
+```
+npm install --save-dev @electron-forge/maker-deb @electron-forge/maker-rpm -d --registry=https://registry.npmmirror.com
+```
+
+- - Execute the packaging (output file located in `out/`) (Table of Contents)
 
 ```
 npm run build
 ```
 
-> 📑 **Note：** To package by yourself, you need to replace the package.json file in the project according to your own device. Currently, **Mac Apple silicon** and **Windows** packaging files are provided. The files can be found in the config folder.
-
-![](/Users/ooooo/Files/tools/notebooks/images/build-5509252.png)
+> **Note:** Errors encountered during the packaging process can be ignored. If packaging fails, try running `npm cache clean --force` to clear the cache and try again.
 
 
+
+## 🛎️ FQA
+
+macOS users may encounter the following error after downloading and installing the app. This is because the new macOS system disables the installation of unverified third-party applications by default, and the "Anywhere" option is hidden. Users need to execute the following command in Terminal to re-enable this option, and then reopen the application to use it normally.
+
+```
+sudo spctl --master-disable
+```
+
+[![img](/Users/ooooo/Files/tools/notebooks/images/fqa.png)](https://github.com/Funsiooo/Ai-Talk/blob/main/assets/fqa.png)
 

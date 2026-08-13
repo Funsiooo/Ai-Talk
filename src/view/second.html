@@ -1,6 +1,5 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,33 +8,173 @@
 </head>
 <body>
   <div class="main_display">
-    <div class="text_windwo">
-      <p class="big-text" id="typing-text">哈喽,有乜可以帮到您?😉</p>
-      <p class="small-text" id="typing-text_2">请在左侧选择列表中选择需要进行对话的模型,开始您的 Ai Talk。</p>
-    </div>
-    
-    
-    <!-- 三个 div 窗口 -->
-    <div class="window" id="window1">
-      <p class="title_text">Ai 搜索
-        <img src="../../assets/search.svg" alt="study">
+
+    <!-- ===== 头部文案区（打字机效果） ===== -->
+    <div class="header-section">
+      <h1 class="big-title">
+        <span id="typing-title"></span><span class="cursor" id="cursor-title" style="display:none">|</span>
+      </h1>
+      <p class="sub-title">
+        <span id="typing-subtitle"></span><span class="cursor" id="cursor-subtitle" style="display:none">|</span>
       </p>
-      <p class="describe_text">汇聚多个大语言模型，提升搜索效率和相关性，优化查询体验。</p> 
     </div>
 
-    <div class="window" id="window1">
-      <p class="title_text">效率提升
-        <img src="../../assets/efficiency.svg" alt="efficiency">
-      </p>
-      <p class="describe_text">善用人工智能，减少操作时间，提高工作效率，节省资源和成本。</p> 
+    <!-- ===== 三个能力展示块 ===== -->
+    <div class="feature-list" id="feature-list">
+
+      <!-- 能力1：AI 对话 -->
+      <div class="feature-item">
+        <div class="feature-icon">
+          <img src="../../assets/search.svg" alt="search">
+        </div>
+        <div class="feature-text">
+          <p class="feature-title">双模式 AI 对话</p>
+          <p class="feature-desc">默认模式开箱即用，直连主流AI模型；API模式自定义接入，支持Prompt优化与多模型切换</p>
+        </div>
+      </div>
+
+      <!-- 能力2：数据安全 -->
+      <div class="feature-item">
+        <div class="feature-icon">
+          <img src="../../assets/efficiency.svg" alt="efficiency">
+        </div>
+        <div class="feature-text">
+          <p class="feature-title">敏感数据安全防护</p>
+          <p class="feature-desc">API模式下自动检测身份证、密钥、Token等敏感信息，外发拦截+即时告警，防止数据泄露</p>
+        </div>
+      </div>
+
+      <!-- 能力3：日志追踪 -->
+      <div class="feature-item">
+        <div class="feature-icon">
+          <img src="../../assets/study.svg" alt="study">
+        </div>
+        <div class="feature-text">
+          <p class="feature-title">全链路日志追踪</p>
+          <p class="feature-desc">每次API请求自动记录响应内容、Token用量与耗时，全程可追溯，满足合规审计需求</p>
+        </div>
+      </div>
+
     </div>
 
-    <div class="window" id="window1">
-      <p class="title_text">深度学习
-        <img src="../../assets/study.svg" alt="study">
-      </p>
-      <p class="describe_text">借力打力，借助大模型大量数据，提升学习效率，增强知识汇聚能力。</p> 
+    <!-- ===== 双按钮区 ===== -->
+    <div class="btn-group" id="btn-group">
+      <button class="mode-btn mode-btn-primary" id="btn-default-mode">默认模式</button>
+      <button class="mode-btn mode-btn-outline" id="btn-api-mode">API 模式</button>
     </div>
+
   </div>
+
+  <!-- ===== 并行动画协同逻辑：打字机 / 双模式入口 / 按钮渐入渐出 ===== -->
+  <script>
+  (function() {
+    'use strict';
+
+    var titleText = 'Hello，Let\'s Ai Talk！';
+    var subtitleText = '你嘅AI聚合伙伴，可以倾偈，可以帮手，仲可以帮你守住数据。';
+
+    // ===== DOM 引用 =====
+    var titleEl = document.getElementById('typing-title');
+    var subtitleEl = document.getElementById('typing-subtitle');
+    var cursorTitle = document.getElementById('cursor-title');
+    var cursorSubtitle = document.getElementById('cursor-subtitle');
+    var featureList = document.getElementById('feature-list');
+    var btnGroup = document.getElementById('btn-group');
+    var btnDefault = document.getElementById('btn-default-mode');
+    var btnApi = document.getElementById('btn-api-mode');
+
+    // ===== 基于 requestAnimationFrame 的等待器（替代 setTimeout，避免定时器与动画不同步） =====
+    function waitRAF(ms) {
+      return new Promise(function(resolve) {
+        var start = null;
+        function frame(ts) {
+          if (start === null) start = ts;
+          if (ts - start >= ms) { resolve(); return; }
+          requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+
+    // ===== 打字机效果：rAF 时间驱动，单帧仅追加少量字符，不阻塞主线程 =====
+    function typeText(el, cursor, text, charsPerSecond) {
+      return new Promise(function(resolve) {
+        var start = null;
+        var revealed = 0;
+        cursor.style.display = 'inline';
+        function frame(ts) {
+          if (start === null) start = ts;
+          var target = Math.min(text.length, Math.floor(((ts - start) / 1000) * charsPerSecond));
+          if (target > revealed) {
+            el.textContent = text.slice(0, target);
+            revealed = target;
+          }
+          if (revealed < text.length) {
+            requestAnimationFrame(frame);
+          } else {
+            cursor.style.display = 'none';
+            resolve();
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+
+    // ===== 打字机循环播放：标题 → 副标题 → 停留 → 清空重播 =====
+    // 标题/副标题已通过 min-height 预留行高，清空重播不会引起下方内容跳动
+    function playTypingLoop() {
+      typeText(titleEl, cursorTitle, titleText, 12.5)
+        .then(function() { return typeText(subtitleEl, cursorSubtitle, subtitleText, 20); })
+        .then(function() {
+          // 停留期间保持副标题光标闪烁
+          cursorSubtitle.style.display = 'inline';
+          return waitRAF(2200);
+        })
+        .then(function() {
+          titleEl.textContent = '';
+          subtitleEl.textContent = '';
+          playTypingLoop();
+        });
+    }
+
+    // ===== 统一并行启动入口：同一帧内同时启动全部效果，无先后依赖 =====
+    function launch() {
+      // 强制布局：先应用 CSS 隐藏态，再切换可见类，过渡动画才能触发
+      void featureList.offsetHeight;
+      // ① 能力展示区渐入
+      featureList.classList.add('is-visible');
+      // ② 双模式 AI 对话入口（按钮组）渐入 —— 与打字机并行，不等待其结束
+      btnGroup.classList.add('is-visible');
+      // ③ 打字机效果（循环播放）
+      playTypingLoop();
+    }
+
+    // ===== 按钮点击：先渐出过渡，再执行跳转 / 模式切换 =====
+    function fadeOutButtons(done) {
+      if (btnGroup.classList.contains('is-leaving')) return;
+      btnGroup.classList.add('is-leaving');
+      btnDefault.disabled = true;
+      btnApi.disabled = true;
+      waitRAF(260).then(done);
+    }
+
+    btnDefault.addEventListener('click', function() {
+      fadeOutButtons(function() {
+        // 默认模式：跳转到官方模型选择页（module.html）
+        window.location.replace('module.html');
+      });
+    });
+
+    btnApi.addEventListener('click', function() {
+      fadeOutButtons(function() {
+        // 通过 hash 变化通知父窗口切换到 API 模式
+        window.location.hash = 'enter-api-mode';
+      });
+    });
+
+    // 页面就绪即并行启动
+    launch();
+  })();
+  </script>
 </body>
 </html>

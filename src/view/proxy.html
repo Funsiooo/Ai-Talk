@@ -13,9 +13,12 @@
     </h1>
 
     <input type="text" id="proxy-input" placeholder="请输入代理地址,例：http://127.0.0.1:7890">
-    <button id="set-proxy-btn">设置代理</button>
-    <button id="clear-proxy-btn">清除代理</button>
-    <button id="cancel">关闭</button>
+    <div id="proxy-notify" class="proxy-notify" style="display:none;"></div>
+    <div class="button-group">
+      <button id="set-proxy-btn">设置代理</button>
+      <button id="clear-proxy-btn">清除代理</button>
+      <button id="cancel">关闭</button>
+    </div>
   </div>
 
   <script>
@@ -24,15 +27,35 @@
     const clearProxyBtn = document.getElementById('clear-proxy-btn');
     const cancelButton = document.getElementById('cancel');
 
-    // 设置代理
+    // 设置代理（错误信息用应用内提示展示，替代原生框架弹窗）
     setProxyBtn.addEventListener('click', () => {
       const proxyAddress = proxyInput.value.trim();
-      if (proxyAddress) {
-        window.electron.setProxy(proxyAddress);
-      } else {
-        // alert('请输入代理地址');
+      if (!proxyAddress) {
+        showProxyNotify('请输入代理地址');
+        return;
       }
+      window.electron.setProxy(proxyAddress).then(function (res) {
+        if (res && res.ok) {
+          showProxyNotify('代理设置成功', true);
+        } else if (res) {
+          showProxyNotify(res.error || '设置代理失败');
+        }
+      });
     });
+
+    // 应用内提示（黑色样式，替代原生 dialog）
+    var proxyNotifyTimer = null;
+    function showProxyNotify(message, isSuccess) {
+      var el = document.getElementById('proxy-notify');
+      if (!el) return;
+      el.textContent = message;
+      el.className = 'proxy-notify ' + (isSuccess ? 'proxy-notify-success' : 'proxy-notify-error');
+      el.style.display = 'block';
+      if (proxyNotifyTimer) clearTimeout(proxyNotifyTimer);
+      proxyNotifyTimer = setTimeout(function () {
+        el.style.display = 'none';
+      }, 4000);
+    }
 
     // 清除代理
     clearProxyBtn.addEventListener('click', () => {

@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>技能商店</title>
+  <link rel="stylesheet" href="../css/shop.css">
+</head>
+<body>
+  <div class="shop-page">
+    <!-- ===== 头部 ===== -->
+    <header class="shop-header">
+      <div class="shop-header-left">
+        <div class="shop-header-icon">
+          <img src="../../assets/shop.svg" alt="">
+        </div>
+        <div>
+          <h1 class="shop-title">技能商店</h1>
+          <p class="shop-subtitle">选择技能，为 AI 对话添加专业能力</p>
+        </div>
+      </div>
+      <div class="shop-header-actions">
+        <button class="shop-import-btn" id="shop-import-btn" title="导入技能（支持 .md / .zip，单个文件不超过 10MB）">＋ 导入技能</button>
+        <button class="shop-template-btn" id="shop-template-btn" title="查看 Skill 编写模板与规范">编写模板</button>
+        <button class="shop-close-btn" id="shop-close-btn" title="关闭商店">×</button>
+      </div>
+    </header>
+
+    <!-- ===== 操作结果提示 ===== -->
+    <div class="shop-toast" id="shop-toast" style="display:none;"></div>
+
+    <!-- ===== 允许访问的路径（沙箱范围） ===== -->
+    <section class="shop-workspace" id="shop-workspace">
+      <div class="shop-workspace-header">
+        <div>
+          <h2 class="shop-workspace-title">允许访问的路径</h2>
+          <p class="shop-workspace-subtitle">所有技能共用的可读取目录（仅只读）；未在此设置的路径一律无法读取</p>
+        </div>
+        <button class="shop-workspace-add" id="shop-workspace-add">＋ 添加路径</button>
+      </div>
+      <div class="shop-workspace-list" id="shop-workspace-list">
+        <div class="shop-workspace-empty" id="shop-workspace-empty">未设置，点击「＋ 添加路径」指定一个文件夹</div>
+      </div>
+    </section>
+
+    <!-- ===== 技能列表 ===== -->
+    <div class="shop-grid" id="shop-grid"></div>
+    <div class="shop-empty" id="shop-empty" style="display:none;">暂无可用技能</div>
+  </div>
+
+  <!-- ===== 技能详情弹窗 ===== -->
+  <div class="shop-modal-overlay" id="shop-modal" style="display:none;">
+    <div class="shop-modal">
+      <div class="shop-modal-header">
+        <h2 id="modal-name"></h2>
+        <button class="shop-modal-close" id="modal-close" title="关闭">×</button>
+      </div>
+      <div class="shop-modal-body" id="modal-body"></div>
+      <div class="shop-modal-footer">
+        <button class="shop-modal-del" id="modal-del-btn" style="display:none;">删除此技能</button>
+        <div class="shop-modal-footer-right">
+          <button class="shop-modal-cancel" id="modal-cancel">取消</button>
+          <button class="shop-use-btn" id="modal-use-btn">引用此技能</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Skill 编写模板弹窗 ===== -->
+  <div class="shop-modal-overlay" id="template-modal" style="display:none;">
+    <div class="shop-modal shop-template-modal">
+      <div class="shop-modal-header">
+        <h2>Skill 编写模板</h2>
+        <button class="shop-modal-close" id="template-close" title="关闭">×</button>
+      </div>
+      <div class="shop-modal-body shop-template-body" id="template-body"></div>
+      <div class="shop-modal-footer">
+        <div class="shop-modal-footer-right">
+          <button class="shop-modal-cancel" id="template-cancel">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 删除技能确认弹窗（替代原生 confirm，无框架 logo，按钮黑色居中） ===== -->
+  <div class="shop-modal-overlay" id="shop-confirm-modal" style="display:none;">
+    <div class="shop-modal shop-confirm-modal">
+      <div class="shop-modal-header">
+        <h2>删除技能</h2>
+        <button class="shop-modal-close" id="shop-confirm-close" title="关闭">×</button>
+      </div>
+      <div class="shop-modal-body">
+        <p id="shop-confirm-msg" class="shop-confirm-msg"></p>
+      </div>
+      <div class="shop-modal-footer shop-confirm-footer">
+        <button class="shop-confirm-ok" id="shop-confirm-ok">删除</button>
+        <button class="shop-modal-cancel" id="shop-confirm-cancel">取消</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    'use strict';
+
+    var grid = document.getElementById('shop-grid');
+    var emptyEl = document.getElementById('shop-empty');
+
+    // 技能数据由主窗口（renderer.js）在打开商店前写入 localStorage
+    var SKILL_LIST_KEY = 'ai-talk-skill-list';
+    var skills = [];
+    try {
+      var raw = localStorage.getItem(SKILL_LIST_KEY);
+      skills = raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      skills = [];
+    }
+
+    // 补齐每个技能展示所需的字段
+    function normalizeSkill(s) {
+      if (!s) return null;
+      return {
+        id: s.id || '',
+        name: s.name || s.id || '未命名技能',
+        type: s.type || 'system',
+        description: s.description || (s._body ? s._body.replace(/\n/g, ' ').substring(0, 80) : ''),
+        systemPrompt: s.systemPrompt || '',
+        body: s._body || '',
+        tools: s.tools || [],
+        deletable: s.deletable !== false
+      };
+    }
+
+    skills = (skills || []).map(normalizeSkill).filter(function (s) { return s && s.id; });
+
+    // ===== 允许访问的路径（沙箱范围） =====
+    var WORKSPACE_LIST_KEY = 'ai-talk-workspace-list';
+    var workspaceListEl = document.getElementById('shop-workspace-list');
+    var workspaceEmptyEl = document.getElementById('shop-workspace-empty');
+    var workspacePaths = [];
+    try {
+      var wsRaw = localStorage.getItem(WORKSPACE_LIST_KEY);
+      workspacePaths = wsRaw ? JSON.parse(wsRaw) : [];
+    } catch (e) {
+      workspacePaths = [];
+    }
+    if (!Array.isArray(workspacePaths)) workspacePaths = [];
+
+    function renderWorkspaceList() {
+      if (!workspaceListEl) return;
+      workspaceListEl.innerHTML = '';
+      if (workspacePaths.length === 0) {
+        workspaceEmptyEl.style.display = 'block';
+        return;
+      }
+      workspaceEmptyEl.style.display = 'none';
+      for (var i = 0; i < workspacePaths.length; i++) {
+        var p = workspacePaths[i];
+        var row = document.createElement('div');
+        row.className = 'shop-workspace-item';
+        var info = document.createElement('div');
+        info.className = 'shop-workspace-item-info';
+        info.title = p;
+        var name = document.createElement('div');
+        name.className = 'shop-workspace-item-name';
+        name.textContent = p.replace(/[\\/]+$/, '').split(/[\\/]/).pop() || p;
+        var pathEl = document.createElement('div');
+        pathEl.className = 'shop-workspace-item-path';
+        pathEl.textContent = p;
+        info.appendChild(name);
+        info.appendChild(pathEl);
+        var remove = document.createElement('button');
+        remove.className = 'shop-workspace-item-remove';
+        remove.textContent = '移除';
+        remove.title = '移除该路径（技能将无法再访问）';
+        (function (path) {
+          remove.addEventListener('click', function () {
+            window.location.hash = 'remove-workspace:' + encodeURIComponent(path);
+          });
+        })(p);
+        row.appendChild(info);
+        row.appendChild(remove);
+        workspaceListEl.appendChild(row);
+      }
+    }
+
+    // 添加路径：通过 hash 通知主窗口弹出文件夹选择框
+    function addWorkspace() {
+      window.location.hash = 'set-workspace';
+    }
+
+    document.getElementById('shop-workspace-add').addEventListener('click', addWorkspace);
+    renderWorkspaceList();
+
+    function getSkillById(id) {
+      for (var i = 0; i < skills.length; i++) {
+        if (skills[i].id === id) return skills[i];
+      }
+      return null;
+    }
+
+    // ===== Markdown 渲染（与 API 对话一致的简化版） =====
+
+    // 简易语法高亮：给代码添加 span 着色
+    function highlightCode(code, lang) {
+      if (!code) return '';
+      var escaped = escapeHtml(code);
+      // 用占位符保护已有 tag
+      var placeholders = [];
+      escaped = escaped.replace(/(<[^>]+>)/g, function (m) {
+        placeholders.push(m);
+        return '\x00PH' + (placeholders.length - 1) + '\x00';
+      });
+
+      var lines = escaped.split('\n');
+      var result = [];
+      var keywords = 'def|class|return|if|else|elif|for|while|import|from|as|try|except|finally|pass|break|continue|with|yield|lambda|and|or|not|in|is|None|True|False|self|async|await|raise|assert|global|nonlocal|const|let|var|function|new|this|throw|catch|typeof|instanceof|export|default';
+      var kwPattern = new RegExp('\\b(' + keywords + ')\\b', 'g');
+
+      for (var i = 0; i < lines.length; i++) {
+        var line = lines[i];
+
+        // 全行注释（Python # / JS //，注释占据整行）
+        var fullCommentMatch = line.match(/^(\s*)(#|\/\/)(.*)/);
+        if (fullCommentMatch) {
+          result.push(fullCommentMatch[1] + '<span class="hljs-comment">' + fullCommentMatch[2] + fullCommentMatch[3] + '</span>');
+          continue;
+        }
+
+        // 字符串（先提取为占位符）
+        var strPlaceholders = [];
+        line = line.replace(/(&quot;[^&]*&quot;|&#39;[^&]*&#39;|"[^"]*"|'[^']*')/g, function (m) {
+          strPlaceholders.push('<span class="hljs-string">' + m + '</span>');
+          return '\x00STR_' + (strPlaceholders.length - 1) + '\x00';
+        });
+
+        // 数字
+        line = line.replace(/\b(\d+\.?\d*)\b/g, '<span class="hljs-number">$1</span>');
+        line = line.replace(/0x[0-9a-fA-F]+/g, '<span class="hljs-number">$&</span>');
+
+        // 关键词
+        line = line.replace(kwPattern, '<span class="hljs-keyword">$1</span>');
+
+        // 内置函数
+        line = line.replace(/\b(print|range|len|type|int|str|float|list|dict|set|tuple|open|input|enumerate|zip|map|filter|sorted|reversed|abs|max|min|sum|round|isinstance|hasattr|getattr|setattr|super|dir|vars|id)\b/g, '<span class="hljs-builtin">$1</span>');
+
+        // 行内注释（span 深度追踪，避免匹配字符串内的 # 或 //）
+        var depth = 0;
+        var commentStart = -1;
+        for (var ci = 0; ci < line.length - 1; ci++) {
+          if (ci + 7 <= line.length && line.substring(ci, ci + 7) === '</span>') {
+            depth--;
+            ci += 6;
+            continue;
+          }
+          if (ci + 5 <= line.length && line.substring(ci, ci + 5) === '<span') {
+            depth++;
+            ci += 4;
+            continue;
+          }
+          if (depth > 0) continue;
+          if (line[ci] === '#' && (ci === 0 || line[ci - 1] === ' ') && (ci + 1 < line.length && line[ci + 1] !== '#')) {
+            commentStart = ci;
+            break;
+          }
+          if (line[ci] === '/' && line[ci + 1] === '/' && (ci === 0 || line[ci - 1] === ' ')) {
+            commentStart = ci;
+            break;
+          }
+        }
+        if (commentStart !== -1) {
+          line = line.substring(0, commentStart) + '<span class="hljs-comment">' + line.substring(commentStart) + '</span>';
+        }
+
+        // 还原字符串占位符
+        if (strPlaceholders.length > 0) {
+          line = line.replace(/\x00STR_(\d+)\x00/g, function (_, idx) {
+            return strPlaceholders[parseInt(idx)];
+          });
+        }
+
+        result.push(line);
+      }
+      var highlighted = result.join('\n');
+
+      // 还原占位符
+      highlighted = highlighted.replace(/\x00PH(\d+)\x00/g, function (_, idx) {
+        return placeholders[parseInt(idx)];
+      });
+
+      return highlighted;
+    }
+
+    // 简化版 Markdown → HTML 渲染（支持代码块/表格/列表/引用/标题/行内格式）
+    function renderMarkdown(text) {
+      if (!text) return '';
+
+      // ---- 代码块 ```code``` —— 提取为占位符 ----
+      var codeBlocks = [];
+      var result = text.replace(/```(\w*)\n?([\s\S]*?)```/g, function (match, lang, code) {
+        var displayLang = lang || 'plaintext';
+        var highlighted = highlightCode(code.replace(/^\n+|\n+$/g, ''), displayLang);
+        codeBlocks.push(
+          '<div class="code-block-wrapper">' +
+            '<div class="code-block-header">' +
+              '<span class="code-lang-label">' + escapeHtml(displayLang) + '</span>' +
+              '<button class="code-copy-btn" type="button" title="复制代码">复制</button>' +
+            '</div>' +
+            '<pre><code class="lang-' + escapeHtml(displayLang) + '">' + highlighted + '</code></pre>' +
+          '</div>'
+        );
+        return '\x00CB_' + (codeBlocks.length - 1) + '\x00';
+      });
+
+      // ---- 剩余部分转义 ----
+      result = escapeHtml(result);
+
+      // ---- 行内格式化 ----
+      function inlineFormat(s) {
+        if (!s) return '';
+        s = s.replace(/`([^`]+)`/g, '<code>$1</code>');
+        s = s.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+        s = s.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+        s = s.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+
+        // 裸 URL（保护已生成的行内代码标签）
+        var inlineCodes = [];
+        s = s.replace(/(<code>[^<]*<\/code>)/g, function (m) {
+          inlineCodes.push(m);
+          return '\x00IC_' + (inlineCodes.length - 1) + '\x00';
+        });
+        s = s.replace(/(?<![">])(https?:\/\/[^\s<>"]+)/g, function (match) {
+          var trimmed = match.replace(/[.,;:!?)\]}>。，；：！？]+$/, '');
+          if (trimmed.length < 10) return match;
+          var suffix = match.slice(trimmed.length);
+          return '<a href="' + trimmed + '" target="_blank" rel="noopener">' + trimmed + '</a>' + suffix;
+        });
+        s = s.replace(/\x00IC_(\d+)\x00/g, function (_, i) { return inlineCodes[parseInt(i)]; });
+        return s;
+      }
+
+      // ---- 表格 ----
+      function parseTableRow(line) {
+        var l = line.trim();
+        if (l.charAt(0) === '|') l = l.substring(1);
+        if (l.charAt(l.length - 1) === '|') l = l.substring(0, l.length - 1);
+        var cells = l.split('|');
+        for (var c = 0; c < cells.length; c++) cells[c] = inlineFormat(cells[c].trim());
+        return cells;
+      }
+
+      function isTableSep(line) {
+        var t = line.trim();
+        return t.indexOf('-') !== -1 && /^\|?[\s:|-]+\|?$/.test(t);
+      }
+
+      function renderTable(header, rows) {
+        var html = '<table><thead><tr>';
+        for (var h = 0; h < header.length; h++) html += '<th>' + (header[h] || '') + '</th>';
+        html += '</tr></thead><tbody>';
+        for (var r = 0; r < rows.length; r++) {
+          html += '<tr>';
+          for (var c = 0; c < rows[r].length; c++) html += '<td>' + (rows[r][c] || '') + '</td>';
+          html += '</tr>';
+        }
+        html += '</tbody></table>';
+        return html;
+      }
+
+      // ---- 列表 ----
+      function isListLine(line) {
+        var t = line.trim();
+        return /^[-+*]\s+/.test(t) || /^\d+\.\s+/.test(t);
+      }
+
+      // ---- 行级解析 ----
+      var lines = result.split('\n');
+      var out = [];
+      var paragraph = [];
+      var i = 0;
+
+      function flushParagraph() {
+        if (paragraph.length === 0) return;
+        out.push('<p>' + paragraph.map(inlineFormat).join('<br>') + '</p>');
+        paragraph = [];
+      }
+
+      while (i < lines.length) {
+        var line = lines[i];
+        var trimmed = line.trim();
+
+        // 代码块占位符
+        if (/^\x00CB_\d+\x00$/.test(line)) {
+          flushParagraph();
+          out.push(line);
+          i++;
+          continue;
+        }
+
+        // 空行
+        if (trimmed === '') {
+          flushParagraph();
+          i++;
+          continue;
+        }
+
+        // 分隔线
+        if (/^[-*_]{3,}\s*$/.test(trimmed)) {
+          flushParagraph();
+          out.push('<hr>');
+          i++;
+          continue;
+        }
+
+        // 表格
+        if (line.indexOf('|') !== -1 && i + 1 < lines.length && isTableSep(lines[i + 1])) {
+          flushParagraph();
+          var header = parseTableRow(line);
+          i += 2;
+          var rows = [];
+          while (i < lines.length && lines[i].trim() !== '' && lines[i].indexOf('|') !== -1) {
+            rows.push(parseTableRow(lines[i]));
+            i++;
+          }
+          out.push(renderTable(header, rows));
+          continue;
+        }
+
+        // 引用块
+        if (/^&gt;\s?/.test(line)) {
+          flushParagraph();
+          var quotes = [];
+          while (i < lines.length && /^&gt;\s?/.test(lines[i])) {
+            quotes.push(inlineFormat(lines[i].replace(/^&gt;\s?/, '')));
+            i++;
+          }
+          out.push('<blockquote>' + quotes.join('<br>') + '</blockquote>');
+          continue;
+        }
+
+        // 列表（含缩进子列表）
+        if (isListLine(line)) {
+          flushParagraph();
+          var listStack = [];
+          while (i < lines.length && lines[i].trim() !== '' && isListLine(lines[i])) {
+            var l = lines[i];
+            var indent = l.search(/\S/);
+            var t = l.trim();
+            var olm = t.match(/^(\d+)\.\s+(.*)$/);
+            var um = t.match(/^[-+*]\s+(.*)$/);
+            var content = olm ? olm[2] : um[1];
+            var tag = olm ? 'ol' : 'ul';
+
+            while (listStack.length > 0 && listStack[listStack.length - 1].indent > indent) {
+              out.push('</' + listStack.pop().tag + '>');
+            }
+            var top = listStack[listStack.length - 1];
+            if (top && top.indent === indent) {
+              if (top.tag !== tag) {
+                out.push('</' + top.tag + '>');
+                listStack.pop();
+                out.push('<' + tag + '>');
+                listStack.push({ tag: tag, indent: indent });
+              }
+            } else {
+              out.push('<' + tag + '>');
+              listStack.push({ tag: tag, indent: indent });
+            }
+
+            // 任务列表
+            var task = content.match(/^\[( |x|X)\]\s+(.*)$/);
+            var itemHtml = inlineFormat(task ? task[2] : content);
+            if (task) {
+              itemHtml = '<input type="checkbox"' + (task[1] === ' ' ? '' : ' checked') + ' disabled>' + itemHtml;
+            }
+            out.push('<li>' + itemHtml + '</li>');
+            i++;
+          }
+          while (listStack.length > 0) out.push('</' + listStack.pop().tag + '>');
+          continue;
+        }
+
+        // 标题
+        var hm = trimmed.match(/^(#{1,6})\s+(.+)$/);
+        if (hm) {
+          flushParagraph();
+          var level = Math.min(hm[1].length + 1, 6);
+          out.push('<h' + level + '>' + inlineFormat(hm[2]) + '</h' + level + '>');
+          i++;
+          continue;
+        }
+
+        // 普通段落行
+        paragraph.push(line);
+        i++;
+      }
+      flushParagraph();
+
+      // 还原代码块占位符
+      var html = out.join('');
+      html = html.replace(/\x00CB_(\d+)\x00/g, function (_, idx) {
+        return codeBlocks[parseInt(idx)];
+      });
+
+      return html;
+    }
+
+    // ===== 渲染技能卡片 =====
+    function renderCards() {
+      if (skills.length === 0) {
+        emptyEl.style.display = 'block';
+        return;
+      }
+      var html = '';
+      for (var i = 0; i < skills.length; i++) {
+        var s = skills[i];
+        html += '<div class="shop-card" data-id="' + s.id + '" role="button" tabindex="0">' +
+          '<div class="shop-card-icon">' + escapeHtml(s.name.charAt(0)) + '</div>' +
+          '<div class="shop-card-main">' +
+            '<div class="shop-card-name">' + escapeHtml(s.name) +
+              (s.deletable ? '' : '<span class="shop-card-tag">系统默认</span>') +
+            '</div>' +
+            '<div class="shop-card-desc">' + escapeHtml(s.description || '暂无简介') + '</div>' +
+          '</div>' +
+          (s.deletable ? '<button class="shop-card-del" data-id="' + s.id + '" title="删除此技能">×</button>' : '') +
+          '<span class="shop-card-arrow">›</span>' +
+        '</div>';
+      }
+      grid.innerHTML = html;
+    }
+
+    // ===== 详情弹窗 =====
+    var modal = document.getElementById('shop-modal');
+    var modalName = document.getElementById('modal-name');
+    var modalBody = document.getElementById('modal-body');
+    var modalDelBtn = document.getElementById('modal-del-btn');
+    var currentSkill = null;
+
+    function openDetail(id) {
+      for (var i = 0; i < skills.length; i++) {
+        if (skills[i].id === id) {
+          currentSkill = skills[i];
+          break;
+        }
+      }
+      if (!currentSkill) return;
+
+      modalName.textContent = currentSkill.name;
+      var html = '';
+      if (currentSkill.description) {
+        html += '<div class="shop-modal-desc shop-md">' + renderMarkdown(currentSkill.description) + '</div>';
+      }
+      if (currentSkill.systemPrompt) {
+        html += '<div class="shop-modal-section-title">System Prompt（发送时自动注入）</div>' +
+          '<pre class="shop-modal-code">' + escapeHtml(currentSkill.systemPrompt) + '</pre>';
+      }
+      if (currentSkill.tools && currentSkill.tools.length) {
+        var toolTags = currentSkill.tools.map(function (t) {
+          var name = (typeof t === 'string') ? t : (t && t.name);
+          return name ? '<span class="shop-modal-tool-tag">' + escapeHtml(name) + '</span>' : '';
+        }).filter(Boolean).join('');
+        html += '<div class="shop-modal-section-title">可用工具（引用此技能即授权，仅限「允许访问的路径」内只读访问）</div>' +
+          '<div class="shop-modal-tools">' + toolTags + '</div>';
+      }
+      if (currentSkill.body) {
+        html += '<div class="shop-modal-section-title">使用说明</div>' +
+          '<div class="shop-modal-body-text shop-md">' + renderMarkdown(currentSkill.body) + '</div>';
+      }
+      modalBody.innerHTML = html;
+      // 系统默认技能不可删除，不显示删除按钮
+      modalDelBtn.style.display = currentSkill.deletable ? 'inline-block' : 'none';
+      modal.style.display = 'flex';
+    }
+
+    function closeDetail() {
+      modal.style.display = 'none';
+      currentSkill = null;
+    }
+
+    // ===== 引用技能：通过 hash 通知主窗口 =====
+    function useSkill(id) {
+      // 触发 webview 的 did-navigate-in-page，主窗口据此引用技能并回到 API 对话
+      window.location.hash = 'use-skill:' + encodeURIComponent(id);
+    }
+
+    // ===== 关闭商店：通过 hash 通知主窗口返回 =====
+    function closeShop() {
+      window.location.hash = 'close-shop';
+    }
+
+    // ===== 导入技能：通过 hash 通知主窗口弹出文件选择框 =====
+    function importSkill() {
+      window.location.hash = 'import-skill';
+    }
+
+    // ===== 删除技能：应用内确认弹窗（替代原生 confirm，无框架 logo，按钮黑色居中）=====
+    function confirmDeleteSkill(name, onOk) {
+      var overlay = document.getElementById('shop-confirm-modal');
+      var msgEl = document.getElementById('shop-confirm-msg');
+      var okBtn = document.getElementById('shop-confirm-ok');
+      var cancelBtn = document.getElementById('shop-confirm-cancel');
+      var closeBtn = document.getElementById('shop-confirm-close');
+      if (!overlay || !msgEl || !okBtn) { onOk(); return; }
+      msgEl.textContent = '确定要删除技能「' + name + '」吗？删除后不可恢复。';
+      overlay.style.display = 'flex';
+      var done = false;
+      function finish() {
+        if (done) return;
+        done = true;
+        overlay.style.display = 'none';
+        okBtn.removeEventListener('click', onOkClick);
+        cancelBtn.removeEventListener('click', onCancelClick);
+        if (closeBtn) closeBtn.removeEventListener('click', onCancelClick);
+        overlay.removeEventListener('click', onBackdrop);
+      }
+      function onOkClick() { finish(); onOk(); }
+      function onCancelClick() { finish(); }
+      function onBackdrop(e) { if (e.target === overlay) onCancelClick(); }
+      okBtn.addEventListener('click', onOkClick);
+      cancelBtn.addEventListener('click', onCancelClick);
+      if (closeBtn) closeBtn.addEventListener('click', onCancelClick);
+      overlay.addEventListener('click', onBackdrop);
+      okBtn.focus();
+    }
+
+    function requestDeleteSkill(id) {
+      var skill = getSkillById(id);
+      var name = skill ? skill.name : id;
+      confirmDeleteSkill(name, function () {
+        closeDetail();
+        window.location.hash = 'delete-skill:' + encodeURIComponent(id);
+      });
+    }
+
+    // ===== 操作结果提示（由主窗口写入 localStorage 后刷新页面显示） =====
+    var toast = document.getElementById('shop-toast');
+    function showToast(message) {
+      if (!message || !message.text) return;
+      toast.textContent = message.text;
+      toast.className = 'shop-toast ' + (message.type === 'error' ? 'shop-toast-error' : 'shop-toast-success');
+      toast.style.display = 'block';
+      setTimeout(function () {
+        toast.style.display = 'none';
+      }, 4000);
+    }
+
+    // ===== 事件绑定 =====
+    grid.addEventListener('click', function (e) {
+      var delBtn = e.target.closest('.shop-card-del');
+      if (delBtn) {
+        e.stopPropagation();
+        e.preventDefault();
+        requestDeleteSkill(delBtn.getAttribute('data-id'));
+        return;
+      }
+      var card = e.target.closest('.shop-card');
+      if (card) openDetail(card.getAttribute('data-id'));
+    });
+
+    document.getElementById('shop-import-btn').addEventListener('click', importSkill);
+    document.getElementById('shop-close-btn').addEventListener('click', closeShop);
+    document.getElementById('modal-close').addEventListener('click', closeDetail);
+    document.getElementById('modal-cancel').addEventListener('click', closeDetail);
+    document.getElementById('modal-del-btn').addEventListener('click', function () {
+      if (currentSkill) requestDeleteSkill(currentSkill.id);
+    });
+    document.getElementById('modal-use-btn').addEventListener('click', function () {
+      if (currentSkill) useSkill(currentSkill.id);
+    });
+
+    modal.addEventListener('click', function (e) {
+      if (e.target === modal) closeDetail();
+    });
+
+    // 弹窗内代码块复制按钮（事件委托，适配每次打开时动态渲染的内容）
+    modalBody.addEventListener('click', function (e) {
+      var btn = e.target.closest('.code-copy-btn');
+      if (!btn) return;
+      var wrapper = btn.closest('.code-block-wrapper');
+      if (!wrapper) return;
+      var codeEl = wrapper.querySelector('pre code');
+      var text = codeEl ? codeEl.textContent : '';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          btn.textContent = '已复制';
+          setTimeout(function () { btn.textContent = '复制'; }, 1500);
+        }).catch(function () {});
+      }
+    });
+
+    // ===== Skill 编写模板弹窗 =====
+    var TEMPLATE_SKILL = [
+      '---',
+      '# 唯一标识（小写字母/数字/连字符），用于 @skill:<id> 引用，如 @skill:code-review',
+      'id: code-review',
+      '# 技能名称：导入后作为技能目录名（目录名必须与 name 一致）',
+      'name: 代码审查',
+      '# 一句话说明该技能能做什么（在技能商店中展示）',
+      'description: 对代码进行安全与质量审查',
+      '# 本技能需要读取同目录下的哪些文件（脚本/文档/资源）',
+      '# 未在 files 中声明的文件一律拒绝读取；声明目录前缀（如 scripts/）可读取该目录下所有文件',
+      'files:',
+      '  - scripts/scan.py',
+      '  - docs/rules.md',
+      '# 技能允许调用的本地只读工具（read_file / list_dir），不声明则无工具',
+      'tools:',
+      '  - read_file',
+      '  - list_dir',
+      '# 发送到模型的指令（system prompt）',
+      'systemPrompt: |',
+      '  你是代码审查专家。请遵循以下规则：',
+      '  1. 先执行 list_dir path="@skill:code-review/" 查看本技能可用文件；',
+      '  2. 需要脚本或规则时，用 read_file 读取 @skill:code-review/<已在 files 声明的路径>；',
+      '  3. 读取用户代码时使用相对「技能商店 → 允许访问的路径」的相对路径，禁止使用绝对路径；',
+      '  4. 所有分析结果只在对话中展示，禁止写入或修改任何文件。',
+      '---',
+      '',
+      '# Skill: 代码审查',
+      '',
+      '在这里用 Markdown 详细说明技能的使用方式、步骤与注意事项，正文会展示在技能商店详情中。'
+    ].join('\n');
+
+    var templateModal = document.getElementById('template-modal');
+    function openTemplate() {
+      var body = document.getElementById('template-body');
+      body.innerHTML =
+        '<p class="shop-template-intro">技能以 Markdown（YAML Front Matter + 正文）编写，导入支持 <code>.md</code> 与 <code>.zip</code>。' +
+        '入口文件必须是 <code>skill.md</code>（或 <code>SKILL.md</code>），导入后将在 <code>skills/&lt;技能名称&gt;/</code> 下独立成目录。</p>' +
+        '<div class="shop-template-section">默认模板</div>' +
+        '<pre class="shop-modal-code shop-template-code">' + escapeHtml(TEMPLATE_SKILL) + '</pre>' +
+        '<div class="shop-template-section">字段说明</div>' +
+        '<ul class="shop-template-list">' +
+          '<li><code>id</code>：技能唯一标识，全局引用用 @skill:&lt;id&gt;。</li>' +
+          '<li><code>name</code>：技能名称，也是导入后的目录名（目录名必须与 name 一致）。</li>' +
+          '<li><code>description</code>：一句话简介，展示在商店卡片与详情。</li>' +
+          '<li><code>files</code>：技能需要读取的自带文件清单（相对路径）。未声明的一律拒绝读取；声明目录前缀（如 <code>scripts/</code>）可读取该目录下所有文件。</li>' +
+          '<li><code>tools</code>：允许调用的本地只读工具，目前支持 <code>read_file</code>、<code>list_dir</code>、<code>walk_dir</code>（未引用技能时也可用全局只读工具）。</li>' +
+          '<li><code>systemPrompt</code>：注入模型的指令。</li>' +
+          '<li>正文：使用说明，展示在技能详情中。</li>' +
+        '</ul>' +
+        '<div class="shop-template-section">编写规范（安全约束）</div>' +
+        '<ul class="shop-template-list">' +
+          '<li>入口文件必须是 skill.md 或 SKILL.md，且必须包含 YAML Front Matter（以 --- 开始和结束）。</li>' +
+          '<li>技能文件夹内的文件只能通过 @skill:&lt;id&gt;/&lt;相对路径&gt; 访问，且必须先在 files 中声明（或在 systemPrompt/正文中以 @skill:&lt;id&gt;/ 引用）。</li>' +
+          '<li>技能可访问的本地文件仅限「允许访问的路径」中设置的目录（在商店顶部统一设置，仅只读）；未设置的路径一律无法读取。</li>' +
+          '<li>分析结果仅在对话中展示，不落盘、不修改外部文件。</li>' +
+          '<li>单个 .md/.zip 文件超过 10MB 将被拒绝导入。</li>' +
+        '</ul>';
+      templateModal.style.display = 'flex';
+    }
+    function closeTemplate() {
+      templateModal.style.display = 'none';
+    }
+    document.getElementById('shop-template-btn').addEventListener('click', openTemplate);
+    document.getElementById('template-close').addEventListener('click', closeTemplate);
+    document.getElementById('template-cancel').addEventListener('click', closeTemplate);
+    templateModal.addEventListener('click', function (e) {
+      if (e.target === templateModal) closeTemplate();
+    });
+
+    // ===== HTML 转义 =====
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // 读取主窗口写入的操作结果提示（导入/删除后刷新页面时显示）
+    try {
+      var toastRaw = localStorage.getItem('ai-talk-shop-toast');
+      if (toastRaw) {
+        localStorage.removeItem('ai-talk-shop-toast');
+        showToast(JSON.parse(toastRaw));
+      }
+    } catch (e) {}
+
+    renderCards();
+  })();
+  </script>
+</body>
+</html>

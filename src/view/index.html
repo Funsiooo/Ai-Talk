@@ -5,151 +5,207 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ai Talk</title>
   <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/chat.css">
+  <link rel="stylesheet" href="../css/data-panel.css">
 </head>
 <body>
   <div id="container">
-    <!-- 测边栏 -->
+    <!-- 侧边栏 -->
     <div id="sidebar">
-      <!-- logo -->
-      <div class="logo">
-        <img src="../../assets/logo.png" alt="Logo">
-        <h1 class="app_name">Ai Talk</h1>
+
+      <!-- ===== 模型列表视图 ===== -->
+      <div id="sidebar-model-view">
+        <!-- logo -->
+        <div class="logo">
+          <img src="../../assets/logo.png" alt="Logo">
+          <h1 class="app_name">Ai Talk</h1>
+        </div>
+
+        <!-- 对话模式选择 -->
+        <div class="dialogue">
+          <div class="dialogue_text" id="dialogue-trigger">
+            <img src="../../assets/default.svg" alt="Toggle">
+            <span id="dialogue-mode-label">默认模式</span>
+            <button class="action_button" id="dialogue-toggle-btn">
+              <img src="../../assets/dialogue.svg" alt="Toggle">
+            </button>
+          </div>
+          <div class="dialogue-dropdown" id="dialogue-dropdown" style="display: none;">
+            <div class="dialogue-option active" data-mode="web">默认模式</div>
+            <div class="dialogue-option" data-mode="api">API 模式</div>
+          </div>
+        </div>
+
+        <!-- AI 模块 -->
+        <div class="ai_module">
+          <div class="icon-item">
+            <button id="deepseek">
+              <img src="../../assets/deepseek.svg" alt="DeepSeek" class="icon-img"> 深度求索 DeepSeek
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="tyqw">
+              <img src="../../assets/tyqw.png" alt="tyqw" class="icon-img"> 啊里 通义千问
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="tenxun">
+              <img src="../../assets/tenxun.png" alt="tenxun" class="icon-img"> 腾讯 元宝
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="doubao">
+              <img src="../../assets/doubao.png" alt="doubao" class="icon-img"> 字节 豆包
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="kimi">
+              <img src="../../assets/kimi.ico" alt="kimi" class="icon-img"> 月之暗面 Kimi
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="openai">
+              <img src="../../assets/chatgpt.ico" alt="OpenAI" class="icon-img"> OpenAI ChatGPT
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="google">
+              <img src="../../assets/google.svg" alt="google" class="icon-img"> Google Gemini
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="perplexity">
+              <img src="../../assets/perplexity.ico" alt="claude" class="icon-img"> Perplexity AI
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="claude">
+              <img src="../../assets/claude.png" alt="claude" class="icon-img"> Anthropic Claude
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="poe">
+              <img src="../../assets/poe.svg" alt="poe" class="icon-img"> Quora Poe
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="manus">
+              <img src="../../assets/grok.ico" alt="manus" class="icon-img"> 蝴蝶效应 Manus
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="grok">
+              <img src="../../assets/manus.ico" alt="grok" class="icon-img"> xAI Grok
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="meta">
+              <img src="../../assets/meta.ico" alt="meta" class="icon-img"> Meta Ai
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="sciencepal">
+              <img src="../../assets/sciencepal.png" alt="sciencepal" class="icon-img"> Sciencepal Ai
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="copilot">
+              <img src="../../assets/copilot.ico" alt="copilot" class="icon-img"> Microsoft Copilot
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="zhipu">
+              <img src="../../assets/zhipu.png" alt="zhipu" class="icon-img"> 智谱 GLM
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="mimo">
+              <img src="../../assets/mimo.png" alt="mimo" class="icon-img"> 小米 Mimo
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="minimax">
+              <img src="../../assets/minimax.png" alt="minimax" class="icon-img"> Minimax Ai
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="wxyy">
+              <img src="../../assets/wxyy.ico" alt="wxyy" class="icon-img"> 百度 文心一言
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="deepl">
+              <img src="../../assets/deepl.png" alt="deepl" class="icon-img"> DeepL Translator
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="youdaoranslator">
+              <img src="../../assets/youdao.ico" alt="youdaoranslator" class="icon-img"> 网易 有道翻译
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="bing">
+              <img src="../../assets/bing.ico" alt="bing" class="icon-img"> 必应 Bing
+            </button>
+          </div>
+
+          <div class="icon-item">
+            <button id="model-square-btn">
+              <img src="../../assets/search.svg" alt="Model Square" class="icon-img"> 模型广场
+            </button>
+          </div>
+        </div>
       </div>
 
-      <!-- 对话 -->
-      <div class="dialogue">
-        <p class="dialogue_text">
-          选择对话
-          <button class="action_button">
-            <img src="../../assets/dialogue.svg" alt="Logo">
+      <!-- ===== 对话历史视图 ===== -->
+      <div id="sidebar-history-view" style="display: none;">
+        <div class="history-header">
+          <div class="history-brand">
+            <img src="../../assets/logo.png" alt="Ai Talk" class="history-logo">
+            <h3 class="history-title-header">Ai Talk</h3>
+          </div>
+        </div>
+        <div class="history-actions">
+          <button class="btn-new-chat" id="btn-new-chat">
+            <img src="../../assets/add.svg" alt="New" class="btn-icon"> 新建对话
           </button>
-        </p>
-      </div>
-
-      <!-- AI 模块 -->  
-      <div class="ai_module">
-        <div class="icon-item">
-          <button id="deepseek">
-            <img src="../../assets/deepseek.svg" alt="DeepSeek" class="icon-img"> 深度求索 DeepSeek
+          <button class="btn-config" id="btn-open-config">
+            <img src="../../assets/api.svg" alt="Config" class="btn-icon"> API 配置
           </button>
         </div>
-
-        <div class="icon-item">
-          <button id="tyqw">
-            <img src="../../assets/tyqw.png" alt="tyqw" class="icon-img"> 啊里 通义千问
-          </button>
+        <div class="history-section-label">历史对话</div>
+        <div class="history-list" id="history-list">
+          <div class="history-empty">暂无对话记录</div>
         </div>
-
-        <div class="icon-item">
-          <button id="tenxun">
-            <img src="../../assets/tenxun.png" alt="tenxun" class="icon-img"> 腾讯 元宝
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="doubao">
-            <img src="../../assets/doubao.png" alt="doubao" class="icon-img"> 字节 豆包
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="kimi">
-            <img src="../../assets/kimi.ico" alt="kimi" class="icon-img"> 月之暗面 Kimi
-          </button>
-        </div>
-
-
-        <div class="icon-item">
-          <button id="openai">
-            <img src="../../assets/chatgpt.ico" alt="OpenAI" class="icon-img"> OpenAI ChatGPT
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="google">
-            <img src="../../assets/google.png" alt="google" class="icon-img"> Google Gemini
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="perplexity">
-            <img src="../../assets/perplexity.ico" alt="claude" class="icon-img"> Perplexity AI
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="claude">
-            <img src="../../assets/claude.png" alt="claude" class="icon-img"> Anthropic Claude
-          </button>
-        </div>       
-
-        <div class="icon-item">
-          <button id="poe">
-            <img src="../../assets/poe.svg" alt="poe" class="icon-img"> Quora Poe
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="manus">
-            <img src="../../assets/grok.ico" alt="manus" class="icon-img"> 蝴蝶效应 Manus
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="grok">
-            <img src="../../assets/manus.ico" alt="grok" class="icon-img"> xAI Grok
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="meta">
-            <img src="../../assets/meta.ico" alt="meta" class="icon-img"> Meta Ai 
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="sciencepal">
-            <img src="../../assets/sciencepal.png" alt="sciencepal" class="icon-img"> Sciencepal Ai 
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="copilot">
-            <img src="../../assets/copilot.ico" alt="copilot" class="icon-img"> Microsoft Copilot 
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="wxyy">
-            <img src="../../assets/wxyy.ico" alt="wxyy" class="icon-img"> 百度 文心一言
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="deepl">
-            <img src="../../assets/deepl.png" alt="deepl" class="icon-img"> DeepL Translator
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="youdaoranslator">
-            <img src="../../assets/youdao.ico" alt="youdaoranslator" class="icon-img"> 网易 有道翻译 
-          </button>
-        </div>
-
-        <div class="icon-item">
-          <button id="bing">
-            <img src="../../assets/bing.ico" alt="bing" class="icon-img"> 必应 Bing 
-          </button>
-        </div>
-
       </div>
 
       <!-- 设置选项列表 -->
       <div class="settings-list">
-        <div class="settings-item">
-          <button id="home-btn">
-            <img src="../../assets/home.svg" alt="Night Mode Icon"> 回到主页
+        <div class="settings-item" id="api-mode-toggle-item">
+          <button id="api-chat-btn">
+            <img id="api-mode-btn-icon" src="../../assets/api.svg" alt="Mode Toggle">
+            <span id="api-mode-btn-label">API 模式</span>
           </button>
         </div>
 
@@ -166,13 +222,26 @@
         </div>
 
         <div class="settings-item">
-          <button id="version-btn">
-            <img src="../../assets/version.svg" alt="Version Icon"> 关于程序
+          <button id="data-panel-btn">
+            <img src="../../assets/data.svg" alt="Data Icon"> 数据面板
           </button>
         </div>
+
         <div class="settings-item">
           <button id="browser-btn">
             <img src="../../assets/chromium.svg" alt="Browser Icon"> 会话分身
+          </button>
+        </div>
+
+        <div class="settings-item">
+          <button id="home-btn">
+            <img src="../../assets/home.svg" alt="Night Mode Icon"> 回到主页
+          </button>
+        </div>
+
+        <div class="settings-item">
+          <button id="version-btn">
+            <img src="../../assets/version.svg" alt="Version Icon"> 关于程序
           </button>
         </div>
       </div>
@@ -180,13 +249,74 @@
 
 
     <!-- 右边显示区域 -->
-    <div id="content">    
-      <div id="bar-container" style="display: none; width: 50px; height: 100vh;"></div>  
-      <webview id="webview" src="second.html" style="width: 100%; height: 100vh;"></webview>
+    <div id="content">
+      <div id="bar-container" style="display: none; width: 50px; height: 100vh;"></div>
+
+      <!-- webview 模式 -->
+      <webview id="webview" src="second.html" allowpopups style="width: 100%; height: 100vh;"></webview>
+
+      <!-- API 对话区域（由 chat.html 动态加载） -->
+      <div id="chat-placeholder"></div>
+
+      <!-- 数据面板区域（由 data-panel.html 动态加载） -->
+      <div id="data-panel-placeholder"></div>
+    </div>
+
+    <!-- 全局通知弹窗（替代原生 alert，无 Electron Logo） -->
+    <div id="global-notify-overlay" class="modal-overlay" style="display: none;">
+      <div class="notify-box">
+        <p id="global-notify-msg"></p>
+        <button class="btn btn-primary" id="global-notify-ok-btn">确定</button>
+      </div>
+    </div>
+
+    <!-- 全局确认弹窗（替代原生 confirm / 框架弹窗，无 Electron Logo，按钮黑色居中） -->
+    <div id="global-confirm-overlay" class="modal-overlay" style="display: none;">
+      <div class="notify-box confirm-box">
+        <h3 id="global-confirm-title" class="confirm-title"></h3>
+        <div id="global-confirm-msg" class="confirm-msg"></div>
+        <div id="global-confirm-btns" class="confirm-btn-row"></div>
+      </div>
     </div>
   </div>
 
-  <!--- 引入渲染进程文件 renderer.js -->
+  <!-- 引入依赖 JS -->
+  <!-- 同步加载 chat.html 片段，后续脚本才能找到对应 DOM 元素 -->
+  <script>
+    (function() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '../view/chat.html', false);
+      xhr.send();
+      if (xhr.status === 200 || xhr.status === 0) {
+        document.getElementById('chat-placeholder').outerHTML = xhr.responseText;
+      }
+    })();
+  </script>
+
+  <!-- 同步加载 data-panel.html 片段 -->
+  <script>
+    (function() {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '../view/data-panel.html', false);
+      xhr.send();
+      if (xhr.status === 200 || xhr.status === 0) {
+        document.getElementById('data-panel-placeholder').outerHTML = xhr.responseText;
+      }
+    })();
+  </script>
+
+  <script src="../js/api/providers.js"></script>
+  <script src="../js/api/config.js"></script>
+  <script src="../js/api/prompt-templates.js"></script>
+  <script src="../js/api/yaml-parser.js"></script>
+  <script src="../js/api/skills.js"></script>
+  <script src="../js/api/audit-log.js"></script>
+  <script src="../js/api/token-stats.js"></script>
+  <script src="../js/api/sensitive-data-checker.js"></script>
+  <script src="../js/api/chat.js"></script>
+  <script src="../js/api/memory-manager.js"></script>
+  <script src="../js/api/insight-analysis.js"></script>
+  <script src="../js/data-panel.js"></script>
   <script src="../js/renderer.js"></script>
 </body>
 </html>

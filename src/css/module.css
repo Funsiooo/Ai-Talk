@@ -1,0 +1,182 @@
+/* ---- 全局重置 ---- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable', 'Segoe UI', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    /* 纯白底色 */
+    background-color: #ffffff;
+    color: #333;
+    min-height: 100vh;
+}
+
+/* ---- 主容器 ---- */
+.module-page {
+    max-width: 920px;
+    margin: 0 auto;
+    padding: 56px 28px 72px;
+}
+
+/* ====== 头部 ====== */
+.module-header {
+    text-align: center;
+    margin-bottom: 44px;
+}
+
+/* 右上角固定，点击返回模式选择页 */
+.module-close-btn {
+    position: fixed;
+    top: 18px;
+    right: 22px;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #eceff3;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: #4a5260;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    font-family: inherit;
+    outline: none;
+    z-index: 10;
+    user-select: none;
+}
+
+.module-close-btn:hover {
+    background-color: #f4f6fa;
+    border-color: #d5dae3;
+    color: #1a1a2e;
+}
+
+.module-close-btn:active {
+    transform: scale(0.94);
+}
+
+.module-title {
+    font-size: 26px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+}
+
+/* ====== 模型分组 ====== */
+.model-group {
+    margin-bottom: 34px;
+}
+
+.group-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4a5260;
+    margin-bottom: 14px;
+}
+
+/* 左侧色条装饰 */
+.group-title::before {
+    content: '';
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+    background-color: #1a1a2e;
+}
+
+/* ====== 模型宫格 ====== */
+.model-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* Logo 上、名称下 */
+.model-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 118px;
+    padding: 16px 10px 14px;
+    background-color: #ffffff;
+    border: 0.1px solid #eceff3;
+    border-radius: 14px;
+    cursor: pointer;
+    outline: none;
+    user-select: none;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.model-item:hover {
+    border-color: #d5dae3;
+    box-shadow: 0 6px 18px rgba(26, 26, 46, 0.08);
+    transform: translateY(-2px);
+}
+
+.model-item:active {
+    transform: scale(0.97);
+}
+
+/* 圆形容器 */
+.model-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #f4f6fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.model-logo img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.model-name {
+    margin-top: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #333333;
+    line-height: 1.4;
+    text-align: center;
+    max-width: 100px;
+    /* 超长名称省略 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ---- 响应式 ---- */
+@media (max-width: 560px) {
+    .module-page {
+        padding: 40px 16px 56px;
+    }
+
+    .model-item {
+        width: 96px;
+        padding: 12px 8px 12px;
+    }
+
+    .model-logo {
+        width: 38px;
+        height: 38px;
+    }
+
+    .model-logo img {
+        width: 20px;
+        height: 20px;
+    }
+}

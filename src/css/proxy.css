@@ -6,104 +6,133 @@
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 更现代的字体 */
-    background-color: #f9f9f9; /* 明亮柔和的背景色 */
+    font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable', 'Segoe UI', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    background-color: #fff;
     color: #333;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* 让 body 占满整个屏幕 */
+    height: 100vh;
     margin: 0;
 }
 
 .container {
-    background-color: #fff;
-    padding: 0px;
-    border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影 */
-    text-align: center;
-    max-width: 400px; /* 设置最大宽度 */
-    width: 100%; /* 确保容器宽度可以适应屏幕 */
-    box-sizing: border-box;
+  padding: 24px 28px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 应用内提示（替代原生框架弹窗） */
+.proxy-notify {
+  margin: 0 0 14px 0;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.proxy-notify-error {
+  background: #fdeeee;
+  color: #c0392b;
+  border: 1px solid #f5c6c0;
+}
+
+.proxy-notify-success {
+  background: #e8f7ef;
+  color: #1a7f4b;
+  border: 1px solid #bce8cf;
 }
 
 h1 {
-    font-size: 18px;
-    margin-bottom: 20px;
+    font-size: 14px;
+    margin: 0 0 16px 0;
     color: #333;
     font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 h1 .icon {
     width: 18px;
     height: 18px;
-    margin-right: 8px; /* 图标和文本之间的间距 */
-  }
-  
+    opacity: 0.7;
+}
+
 input[type="text"] {
-    width: 320px;
-    padding: 12px;
-    margin: 15px 0;
+    width: 100%;
+    padding: 10px 12px;
+    margin-bottom: 16px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    font-size: 14px;
+    font-size: 13px;
+    color: #333;
     outline: none;
     background-color: #fafafa;
-    transition: all 0.3s ease;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 input[type="text"]:focus {
-    border-color: #42b983;
-    box-shadow: 0 0 8px rgba(66, 185, 131, 0.3);
+    border-color: #999;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.04);
+    background: #fff;
+}
+
+/* 按钮容器 */
+.button-group {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
 }
 
 button {
-    width: 100px;
-    padding: 12px;
-    margin: 0px 0;
-    border-radius: 5px;
+    flex: 1;
+    padding: 9px 0;
+    border-radius: 7px;
     border: none;
-    background-color: #42b983;
-    color: white;
-    font-size: 13px; /* 调整字体大小以适应按钮 */
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.2s, transform 0.15s;
 }
 
-button:hover {
-    background-color: #369d6a;
+button:active {
+    transform: translateY(1px);
 }
 
+/* 设置代理 — 主操作 */
+button#set-proxy-btn {
+    background-color: #2c2c2c;
+    color: #fff;
+}
+
+button#set-proxy-btn:hover {
+    background-color: #1a1a1a;
+}
+
+/* 清除代理 — 次要/警示 */
 button#clear-proxy-btn {
-    background-color: #ff4e00;
+    background-color: #f0f0f0;
+    color: #e05555;
 }
 
 button#clear-proxy-btn:hover {
-    background-color: #e43f00;
+    background-color: #fee;
 }
 
+/* 关闭 — 取消 */
 button#cancel {
-    background-color: #009688;
+    background-color: #f0f0f0;
+    color: #777;
 }
 
 button#cancel:hover {
-    background-color: #00796b;
+    background-color: #e6e6e6;
+    color: #555;
 }
 
 button:focus {
     outline: none;
-}
-
-input[type="text"], button {
-    transition: all 0.2s ease;
-}
-
-@media (max-width: 480px) {
-    .container {
-        padding: 15px;
-        width: 100%;
-        height: 100%;
-        align-items: center;
-    }
 }

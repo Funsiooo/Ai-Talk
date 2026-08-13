@@ -3,10 +3,47 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable', 'Segoe UI', 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
   background-color: #f7f9fc; /* 背景色 */
   display: flex;
   flex-direction: column;
+}
+
+/* ===== 全局滚动条（macOS 风格，跨平台统一） ===== */
+/* 参考 macOS overlay scrollbar 行为：平时隐藏，鼠标滑入滚动区域时显示 */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* 默认：滑块透明（隐藏） */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 3px;
+}
+
+/* 鼠标滑入滚动区域时：显示半透明滑块 */
+:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* 鼠标悬浮滑块本身时：加深 */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* 隐藏滚动条按钮（上下箭头） */
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+/* 隐藏角落交汇处 */
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 /* 容器占满整个视口 */
@@ -18,38 +55,64 @@ body, html {
 
 /* 左侧 sidebar 样式 */
 #sidebar {
-  width: 320px; /* 固定宽度 */
+  width: 280px; /* 固定宽度 */
+  height: 100%;
+  min-height: 0;
+  flex-shrink: 0;  /* 避免被右侧内容挤压 */
   background-color: #f4f4f4; /* 背景色 */
-  padding: 20px;
+  padding: 20px 20px 12px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  box-shadow: 0px 0 10px rgba(0, 0, 0, 0.1); /* 右侧有轻微阴影 */
-  border-right: 0.5px solid #ddd; /* 右边框 */
+  box-shadow: 1px 0 0 rgba(0, 0, 0, 0.03),
+              3px 0 8px rgba(0, 0, 0, 0.03),
+              6px 0 16px rgba(0, 0, 0, 0.02); /* 三层柔和投影 */
+  border-right: 0px solid #ddd; /* 设为 1px solid #ddd 可显示分割线 */
+  /* macOS 无标题栏时，侧边栏顶部作为可拖拽区域 */
+  padding-top: 28px;
+}
+
+/* ---- 无标题栏拖拽区域 ---- */
+/* 侧边栏头部区域可拖拽窗口 */
+.logo,
+.dialogue {
+  -webkit-app-region: drag;
+}
+
+/* 交互元素禁止拖拽，恢复点击功能 */
+.logo img,
+.logo .app_name,
+.dialogue button,
+.dialogue .action_button,
+.dialogue-dropdown,
+.dialogue-option,
+#dialogue-trigger {
+  -webkit-app-region: no-drag;
 }
 
 /* logo 样式 */
 .logo {
-  height: 7%;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 10px 25px;
-  margin-bottom: 10px;
+  justify-content: center;
+  padding: 4px 15px 6px;
+  margin-bottom: 4px;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .logo img {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   margin-right: 10px;
 }
 
 .app_name {
-  font-size: 1.8em;
+  font-size: 1.7em;
   font-weight: bold;
   color: #333;
-  letter-spacing: 1px;
+  letter-spacing: 0.3px;
 }
 
 /* 对话区域样式 */
@@ -59,16 +122,16 @@ body, html {
   flex-direction: column;
   justify-content: flex-start;
   overflow-y: 10px;
-  padding: 10px;
+  padding: 6px 10px;
 }
 
 .dialogue_text {
   font-size: 13px;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 8px;
+  padding: 5px 8px;
   padding-left: 15px; /* 向右移动文字10px，原来是8px */
   background-color: #ffffff;
   border-radius: 8px;
@@ -91,18 +154,85 @@ body, html {
   border: none;
   font-size: 1.5em;
   cursor: pointer;
-  color: #007bff;
-  transition: color 0.3s ease;
+  color: #666;
+  transition: color 0.15s;
 }
 
 .dialogue .action_button:hover {
-  color: #0056b3;
+  color: #111;
 }
+
+/* ---- 对话模式下拉菜单 ---- */
+.dialogue {
+  position: relative;
+}
+
+.dialogue_text {
+  cursor: pointer;
+  user-select: none;
+}
+
+#dialogue-toggle-btn {
+  transition: transform 0.25s ease;
+}
+
+#dialogue-toggle-btn.open {
+  transform: rotate(180deg);
+}
+
+.dialogue-dropdown {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  margin: 4px 10px 0 10px;
+  overflow: hidden;
+  animation: dropdownSlideIn 0.18s ease;
+}
+
+@keyframes dropdownSlideIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dialogue-option {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  font-size: 13px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.15s;
+}
+
+.dialogue-option:hover {
+  background-color: #f0f0f0;
+}
+
+.dialogue-option.active {
+  background-color: #e8e8e8;
+  color: #111;
+  font-weight: 600;
+}
+
+.dialogue-option + .dialogue-option {
+  /* 默认模式与API模式之间的分割线，设为 none 可去掉 */
+  border-top: 1px solid #f0f0f0;
+}
+
+/* AI 模块外层包裹 */
+ #sidebar-model-view {
+   width: 100%;
+   flex: 1;
+   min-height: 0;
+   display: flex;
+   flex-direction: column;
+   overflow: hidden;
+ }
 
 /* AI 模块的按钮样式 */
 .ai_module {
   width: 100%;
-  height: 60%;
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -116,7 +246,7 @@ body, html {
   padding: 0px;
   border-radius: 10px;
   background-color: #f9f9f9;
-  margin-bottom: 16.5px;
+  margin-bottom: 14px; /* 模型样式间距 */
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -143,10 +273,9 @@ body, html {
 }
 
 
-/* 过渡和动画效果 */
+/* 全局盒模型（不设全局 transition：all 过渡会拖慢布局属性、引发抖动，动画由各组件自行声明） */
 * {
   box-sizing: border-box;
-  transition: all 0.3s ease;
 }
 
 /* 去掉按钮边框和轮廓 */
@@ -164,13 +293,13 @@ button {
   transition: background-color 0.3s, transform 0.3s ease; /* 按钮悬停效果 */
 }
 
+/* 按钮 hover/active 不在此处加位移：全局 translateY 会让聊天区/弹窗内所有按钮“飘起”，
+ * 与各模块的精细动效冲突；需要的位移效果由具体组件自行声明。 */
 button:hover {
   /* background-color: #ffffff; 鼠标悬停时背景色 */
-  transform: translateY(-2px); /* 鼠标悬停时轻微上移 */
 }
 
 button:active {
-  transform: translateY(2px); /* 点击按钮时轻微下移 */
 }
 
 /* 图标按钮样式 */
@@ -186,14 +315,15 @@ button span.icon-text {
   color: #333;
 }
 
+
 /* 设置选项列表 */
 .settings-list {
   width: 100%;
-  height: 235px;
+  height: 240px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  /* overflow-y: auto; 允许垂直滚动 */
+  overflow-y: auto;
   padding: 10px;
   /* border-bottom: 1px solid #e0e0e0; 给对话区域添加底部边框 */
 }
@@ -202,16 +332,16 @@ button span.icon-text {
   display: flex;
   align-items: center;
   padding: 0px;
-  border-radius: 4px;
+  border-radius: 8px;
   background-color: #f9f9f9;
   margin-bottom: 10px;
   cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.15s, transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .settings-item:hover {
   background-color: #f0f0f0;
-  transform: translateX(5px);
+  transform: translateX(3px);
 }
 
 .settings-item img {
@@ -226,24 +356,29 @@ button span.icon-text {
 }
 
 .settings-item:hover .setting-text {
-  color: #007BFF; /* 鼠标悬停时文字颜色变更 */
+  color: #111;
 }
 
 /* 设置区域边框样式 */
 .settings-list {
   border-top: 1px solid #e0e0e0; /* 给设置区域添加顶部边框 */
-  padding-top: 20px; /* 上间距，确保边框不与内容紧贴 */
+  padding-top: 20px; /* 上间距，边框不与内容紧贴 */
   padding-bottom: 20px;
 }
-
 /* 右侧 content 样式 */
 #content {
+  position: relative;  /* 数据面板 absolute 定位锚点 */
   width: 100%;
   height: 100%;
   padding: 0px;
   box-sizing: border-box;
-  background-color: #fff;
+  /* API 模式下衬托悬浮卡片，webview 模式下不可见 */
+  background-color: #f0f2f6;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* 随侧栏/右侧面板收缩，避免撑出页面级横向滚动条 */
+  min-width: 0;
 }
+
+/* 设置区域边框样式 */

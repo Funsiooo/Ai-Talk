@@ -1,0 +1,169 @@
+<!-- API 配置 Modal -->
+<div id="api-config-overlay" class="modal-overlay" style="display: none;">
+  <div class="api-config-modal">
+    <div class="modal-header">
+      <h2>API 配置</h2>
+      <button class="modal-close-btn" id="modal-close-btn">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>选择模型</label>
+        <div class="provider-select-wrap">
+          <img id="config-provider-logo" src="../../assets/chatgpt.ico" alt="" />
+          <select id="config-provider-select"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Base URL</label>
+        <input type="text" id="config-base-url" placeholder="https://api.openai.com/v1">
+      </div>
+      <div class="form-group">
+        <label>API Key</label>
+        <input type="password" id="config-api-key" placeholder="sk-...">
+      </div>
+      <div class="form-group">
+        <label>Model</label>
+        <input type="text" id="config-model" placeholder="gpt-4o">
+        <div class="form-hint" id="config-model-hint"></div>
+      </div>
+      <div id="config-status" class="config-status"></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="config-save-btn">保存</button>
+      <button class="btn btn-secondary" id="config-cancel-btn">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- DLP 敏感数据警告 Modal（同时用于：文本发送检测 / 发送前附件预检） -->
+<div id="dlp-warning-overlay" class="modal-overlay" style="display: none;">
+  <div class="api-config-modal" style="width: 480px;">
+    <div class="modal-header">
+      <h2 id="dlp-modal-title">检测到敏感数据</h2>
+      <button class="modal-close-btn" id="dlp-modal-close-btn">×</button>
+    </div>
+    <div class="modal-body">
+      <p id="dlp-modal-desc" style="font-size:13px;color:#64748b;margin:0 0 14px 0;line-height:1.6;">
+        已开启<strong>敏感数据外发监控</strong>，发送内容中发现以下可能包含敏感信息的项目，请确认是否继续发送：
+      </p>
+      <div id="dlp-findings" style="max-height:220px;overflow-y:auto;"></div>
+    </div>
+    <div class="modal-footer" id="dlp-modal-footer">
+      <button class="btn btn-primary" id="dlp-proceed-btn">仍要发送</button>
+      <button class="btn btn-primary" id="dlp-attach-skip-btn" style="display:none;">跳过含敏感数据的文件</button>
+      <button class="btn btn-secondary" id="dlp-cancel-btn">返回修改</button>
+    </div>
+  </div>
+</div>
+
+<!-- Prompt 模版编辑 Modal -->
+<div id="prompt-modal-overlay" class="modal-overlay" style="display: none;">
+  <div class="api-config-modal">
+    <div class="modal-header">
+      <h2 id="prompt-modal-title">新建 Prompt 模版</h2>
+      <button class="modal-close-btn" id="prompt-modal-close-btn">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>模版名称</label>
+        <input type="text" id="prompt-modal-name" placeholder="例如：代码审查、翻译助手">
+      </div>
+      <div class="form-group">
+        <label>Prompt 内容</label>
+        <textarea id="prompt-modal-content" placeholder="输入 Prompt 模版内容..." rows="6" style="width: 100%; padding: 10px 12px; border: 1px solid #ddd; border-radius: 8px; font-size: 14px; font-family: inherit; resize: vertical; box-sizing: border-box; outline: none;"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="prompt-modal-save-btn">保存</button>
+      <div class="optimize-btn-group">
+        <button class="optimize-provider-logo" id="optimize-provider-logo" title="切换优化模型">
+          <img id="optimize-provider-logo-img" src="../../assets/zdy.png" alt="">
+        </button>
+        <button class="btn btn-outline" id="prompt-optimize-btn">提示词优化</button>
+        <div class="optimize-provider-dropdown" id="optimize-provider-dropdown" style="display: none;"></div>
+      </div>
+      <button class="btn btn-secondary" id="prompt-modal-cancel-btn">取消</button>
+    </div>
+  </div>
+</div>
+
+<!-- API 对话区域 -->
+<div id="api-chat-container" style="display: none;">
+  <!-- Prompt 模版面板 -->
+  <div id="prompt-panel" class="prompt-panel">
+    <div class="prompt-panel-inner">
+      <div class="prompt-panel-header">
+        <span>Prompt 模版</span>
+        <button class="prompt-panel-close" id="prompt-panel-close" title="收起面板">×</button>
+      </div>
+      <div class="prompt-panel-list" id="prompt-template-list">
+        <div class="prompt-empty">暂无模版，点击下方按钮新建</div>
+      </div>
+      <button class="prompt-add-btn" id="prompt-add-btn">+ 新建模版</button>
+    </div>
+  </div>
+  <!-- 聊天主区域 -->
+  <div id="chat-main">
+    <div id="chat-header">
+      <img id="chat-provider-logo" src="../../assets/zdy.png" alt="" />
+      <select id="chat-provider-select" style="display:none"></select>
+      <div class="custom-select" id="chat-provider-custom"></div>
+      <button class="shop-entry-btn" id="shop-entry-btn" title="技能商店">
+        <img src="../../assets/shop.svg" alt="">
+      </button>
+      <button class="prompt-toggle-btn" id="prompt-toggle-btn" title="Prompt 模版">
+        <img src="../../assets/prompt.svg" alt="">
+      </button>
+    </div>
+    <div id="chat-messages">
+      <div class="chat-welcome">
+        <div class="chat-welcome-icon">AI</div>
+        <p id="chat-welcome-text">发送消息开始对话</p>
+      </div>
+    </div>
+    <div id="chat-input-area">
+      <div class="chat-input-inner">
+        <div class="chat-input-card">
+          <textarea id="chat-input" placeholder="输入问题，Enter 发送，Shift+Enter 换行，@ 引用历史会话，@skill 引用技能" rows="1"></textarea>
+          <!-- @mention 引用（技能/会话）与附件标签，合并为同一行 chips -->
+          <div class="chat-reference-chips" id="reference-chips" style="display: none;"></div>
+          <div class="chat-input-row-bottom">
+            <div class="chat-input-controls">
+              <button id="btn-attach-file" title="添加文件/文件夹">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+              </button>
+              <button class="btn-expand-input" id="btn-expand-input" title="展开输入框">
+                <img src="../../assets/expansion.svg" alt="">
+              </button>
+            </div>
+            <div class="chat-model-wrap">
+              <span class="chat-model-label">模型</span>
+              <select id="chat-model-select" style="display:none"></select>
+              <div class="custom-select drop-up" id="chat-model-custom"></div>
+            </div>
+            <div class="lang-selector-wrap" id="lang-selector-wrap">
+              <button class="btn-lang-select" id="btn-lang-select" title="选择回答语言">
+                <img class="lang-icon" src="../../assets/translate.svg" alt="">
+                <span class="lang-label" id="lang-label">语言</span>
+              </button>
+              <div class="lang-dropdown" id="lang-dropdown" style="display: none;">
+                <!-- 语言选项由 skills.js 动态渲染 -->
+              </div>
+            </div>
+            <button class="input-dlp-btn" id="dlp-toggle-btn" title="敏感数据外发监控">
+              <img src="../../assets/protect.svg" alt="">
+            </button>
+            <button class="input-web-search-btn" id="web-search-btn" title="联网搜索">
+              <img src="../../assets/network.svg" alt="">
+            </button>
+            <button id="btn-send">发送</button>
+          </div>
+        </div>
+        <!-- @mention 下拉面板 -->
+        <div class="mention-dropdown" id="mention-dropdown" style="display: none;">
+          <div class="mention-dropdown-list" id="mention-list"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

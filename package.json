@@ -1,51 +1,32 @@
 {
   "name": "Ai Talk",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "main": "main.js",
   "scripts": {
+    "clean": "node -e \"var fs=require('fs');var p=require('path');var d=p.join(__dirname,'out');if(fs.existsSync(d)){fs.rmSync(d,{recursive:true,force:true});console.log('[Clean] out/ removed')}\"",
     "start": "electron .",
     "build": "electron-forge make",
     "package": "electron-forge package"
   },
-  "config": {
-    "forge": {
-      "packagerConfig": {
-        "icon": "assets/logo.icns"
-      },
-      "makers": [
-        {
-          "name": "@electron-forge/maker-dmg",
-          "config": {
-            "icon": "assets/logo.icns"
-          }
-        },
-        {
-          "name": "@electron-forge/maker-zip",
-          "config": {
-            "platforms": [
-              "darwin"
-            ]
-          }
-        }
-      ]
-    }
-  },
   "author": "Funsiooo",
-  "license": "GPL-3.0",
-  "description": "一款集合了多种大语言模型应用的开源桌面客户端",
+  "license": "AGPL-3.0",
+  "description": "一款面向个人与企业的双场景 AI 对话客户端",
   "devDependencies": {
-    "@electron-forge/cli": "^7.10.2",
+    "@electron-forge/cli": "^7.11.2",
     "@electron-forge/maker-deb": "^7.6.0",
-    "@electron-forge/maker-dmg": "^7.10.2",
+    "@electron-forge/maker-dmg": "^7.11.2",
     "@electron-forge/maker-rpm": "^7.6.0",
-    "@electron-forge/maker-squirrel": "^7.6.0",
+    "@electron-forge/maker-wix": "^7.6.0",
     "@electron-forge/maker-zip": "^7.6.0",
     "@electron-forge/plugin-auto-unpack-natives": "^7.6.0",
     "@electron-forge/plugin-fuses": "^7.6.0",
-    "appdmg": "^0.6.6",
     "electron": "^33.4.11"
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.1"
+    "extract-zip": "^2.0.1"
+  },
+  "optionalDependencies": {
+    "@electron-forge/maker-dmg": "^7.10.2",
+    "appdmg": "^0.6.6"
   }
 }
