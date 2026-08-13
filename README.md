@@ -228,3 +228,7 @@ sudo spctl --master-disable
 
 [![img](./assets/fqa.png)](https://github.com/Funsiooo/Ai-Talk/blob/main/assets/fqa.png)
 
+## 📨 Contact
+
+<a href="mailto:funsiooomail@gmail.com">Email</a>
+
