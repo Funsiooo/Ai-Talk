@@ -1,4 +1,4 @@
-# <img src="/Users/ooooo/Files/tools/notebooks/images/title-6538184.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Hello, Let's Ai Talk !</span>**
+# <img src="../assets/title.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Hello, Let's Ai Talk !</span>**
 
 <p align="left">
   <img alt="GitHub License" src="https://img.shields.io/github/license/Funsiooo/Ai-Talk?color=%2523%252067b93d">
@@ -45,7 +45,7 @@
 
 <br/>
 
-![md6](/Users/ooooo/Files/tools/notebooks/images/md6.png)
+![md6](../assets/md6.png)
 
 ## 📟 Feature Introduction
 
@@ -53,7 +53,7 @@
 
 Directly connects to the official large model entry service, ready to use out of the box. Reference links in the model output can be opened and viewed directly within the application. Default mode supports session cloning.
 
-![default](/Users/ooooo/Files/tools/notebooks/images/md7.png)
+![default](../assets/md7.png)
 
 ### API Mode
 
@@ -61,7 +61,7 @@ Suitable for internal enterprise model API access. The application has a built-i
 
 ✨ **"Sensitive Data Monitoring for External Sending"** detection is enabled by default. It will automatically issue an alert before sending sensitive data to the AI large model; if the user still chooses to send it, the sensitive content will be anonymized before sending. The detection rules support matching sensitive data types within the enterprise using custom regular expressions, flexibly adapting to the compliance needs of different enterprises.
 
-![api](/Users/ooooo/Files/tools/notebooks/images/md8.png)
+![api](../assets/md8.png)
 
 #### Sensitive Data Outgoing Transmission Detection (DLP)
 
@@ -75,11 +75,11 @@ In API mode, the system automatically scans content before data is sent out, mat
 
 Detection rules are managed through `config/dlp-rules.json`, supporting custom regular expressions and capable of matching any sensitive data type defined internally by the enterprise.
 
-![data](/Users/ooooo/Files/tools/notebooks/images/md9.png)
+![data](../assets/md9.png)
 
-![data2](/Users/ooooo/Files/tools/notebooks/images/md10.png)
+![data2](../assets/md10.png)
 
-![data2](/Users/ooooo/Files/tools/notebooks/images/md11.png)
+![data2](../assets/md11.png)
 
 #### Operation Audit Log
 
@@ -95,7 +95,7 @@ The system records complete operation logs, meeting compliance audit requirement
 
 Logs are stored in plaintext and can be viewed and exported from the application's "**Data Panel**".
 
-![md12](/Users/ooooo/Files/tools/notebooks/images/md12.png)
+![md12](../assets/md12.png)
 
 #### Skill Shop
 
@@ -105,13 +105,13 @@ Supports importing custom skills through the Skill Shop. Skills are written in a
 
 - Read-only, no write access; unauthorized directories are strictly prohibited from being read.
 
-![skill](/Users/ooooo/Files/tools/notebooks/images/skill-6538184.jpg)
+![skill](../assets/skill.jpg)
 
 #### Session Memory and Context Management
 
 The API mode includes a built-in session memory system that supports referencing historical content across sessions (by default, it does not support cross-session memory) and features a context compression mechanism that automatically simplifies content when it exceeds the window size, maintaining consistency and reducing token consumption.
 
-![14](/Users/ooooo/Files/tools/notebooks/images/md14.png)
+![14](../assets/md14.png)
 
 
 
@@ -119,13 +119,13 @@ The API mode includes a built-in session memory system that supports referencing
 
 Built-in Prompt template library, supporting custom templates and categorized management to reduce repetitive input of frequently used prompts; also provides Prompt optimization capabilities to help users express their needs more clearly and accurately.
 
-![15](/Users/ooooo/Files/tools/notebooks/images/md15.png)
+![15](../assets/md15.png)
 
 #### Online Search
 
 Some models support online search. After selecting a model that can be accessed online, click the "Online Search" button to start the online search.
 
-![16](/Users/ooooo/Files/tools/notebooks/images/md16.png)
+![16](../assets/md16.png)
 
 ## 🔐 Data and Security
 
@@ -238,5 +238,5 @@ macOS users may encounter the following error after downloading and installing t
 sudo spctl --master-disable
 ```
 
-[![img](/Users/ooooo/Files/tools/notebooks/images/fqa.png)](https://github.com/Funsiooo/Ai-Talk/blob/main/assets/fqa.png)
+[![img](../assets/fqa.png)](https://github.com/Funsiooo/Ai-Talk/blob/main/assets/fqa.png)
 
