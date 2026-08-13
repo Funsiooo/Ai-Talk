@@ -1,4 +1,4 @@
-# <img src="/Users/ooooo/Files/tools/notebooks/images/title-6538184.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Hello, Let's Ai Talk !</span>**
+# <img src="./assets/title.png" alt="Ai_Talk" style="width: 60px;">**<span style="font-size: 30px; vertical-align: middle;">Hello, Let's Ai Talk !</span>**
 
 <p align="left">
   <img alt="GitHub License" src="https://img.shields.io/github/license/Funsiooo/Ai-Talk?color=%23%2067b93d">
@@ -11,8 +11,7 @@
 
 ## 📔 简介
 
-**Ai Talk** 是面向 **个人** 与 **企业** 的双场景 AI 对话客户端。基于 Electron 实现跨平台统一体验，聚合主流大模型及私有化 API，开箱即用。内置 **DLP 数据防泄漏** 与 **操作审计追踪**，兼顾 AI 效率与数据安全合规。macOS · Windows · Linux 全平台覆盖，安装即运行。
-
+**Ai Talk** 是面向 **个人** 与 **企业** 的双场景 AI 对话客户端。基于 Electron 实现跨平台统一体验，聚合主流大模型及私有化 API，开箱即用。内置 **DLP 数据防泄漏** 与 **操作审计追踪**，兼顾 AI 效率与数据安全合规。macOS · Windows · Linux 全平台覆盖，安装即运行。[\[English Readme\]](https://github.com/Funsiooo/Ai-Talk/blob/main/doc/README_EN.md)
 </br>
 
 **✨ 特色功能**
@@ -43,7 +42,7 @@
 </table>
 <br/>
 
-![md6](/Users/ooooo/Files/tools/notebooks/images/md6.png)
+![md6](./assets/md6.png)
 
 ## 📟 功能介绍
 
@@ -51,7 +50,7 @@
 
 直接接入大模型官方入口服务，开箱即用。模型输出中的参考链接可在应用内直接打开浏览。默认模式支持会话分身。
 
-![default](/Users/ooooo/Files/tools/notebooks/images/md7.png)
+![default](./assets/md7.png)
 
 ### API 模式
 
@@ -59,7 +58,7 @@
 
 ✨ 默认开启 **"敏感数据监控外发"** 检测，外发敏感数据给AI 大模型前会自动告警提示；若用户仍选择发送，将对敏感内容进行脱敏发送。检测规则支持通过自定义正则表达式匹配企业内部的敏感数据类型，灵活适配不同企业的合规需求。
 
-![api](/Users/ooooo/Files/tools/notebooks/images/md8.png)
+![api](./assets/md8.png)
 
 #### 敏感数据外发检测（DLP）
 
@@ -71,11 +70,11 @@ API 模式下，系统在数据外发前自动扫描内容，匹配敏感信息�
 
 检测规则通过 `config/dlp-rules.json` 管理，支持自定义正则表达式，可匹配任何企业内部定义的敏感数据类型。
 
-![data](/Users/ooooo/Files/tools/notebooks/images/md9.png)
+![data](./assets/md9.png)
 
-![data2](/Users/ooooo/Files/tools/notebooks/images/md10.png)
+![data2](./assets/md10.png)
 
-![data2](/Users/ooooo/Files/tools/notebooks/images/md11.png)
+![data2](./assets/md11.png)
 
 #### 操作审计日志
 
@@ -88,7 +87,7 @@ API 模式下，系统在数据外发前自动扫描内容，匹配敏感信息�
 
 日志以明文存储，可在应用内 "**数据面板**" 中查看与导出。
 
-![md12](/Users/ooooo/Files/tools/notebooks/images/md12.png)
+![md12](./assets/md12.png)
 
 #### 技能商店（Skill）
 
@@ -97,13 +96,13 @@ API 模式下，系统在数据外发前自动扫描内容，匹配敏感信息�
 - 在安全沙箱内执行，仅允许读取授权目录
 - 只读、不可写入，未授权目录一律拒绝读取
 
-![skill](/Users/ooooo/Files/tools/notebooks/images/skill-6538184.jpg)
+![skill](./assets/skill.jpg)
 
 #### 会话记忆与上下文管理
 
 API 模式下内置会话记忆系统，支持跨会话引用历史内容（默认不跨会话记忆），并具备上下文压缩机制，在超出窗口时自动精简，保持连贯性并降低 Token 消耗。
 
-![14](/Users/ooooo/Files/tools/notebooks/images/md14.png)
+![14](./assets/md14.png)
 
 
 
@@ -111,13 +110,13 @@ API 模式下内置会话记忆系统，支持跨会话引用历史内容（默�
 
 内置 Prompt 模板库，支持自定义模板与分类管理，减少常用提示词的重复输入；并提供 Prompt 优化能力，帮助用户将需求表述得更清晰、更准确。
 
-![15](/Users/ooooo/Files/tools/notebooks/images/md15.png)
+![15](./assets/md15.png)
 
 #### 联网搜索
 
 部分模型支持联网搜索,选择可联网的模型后，点击联网搜索按钮即可进行联网搜索。
 
-![16](/Users/ooooo/Files/tools/notebooks/images/md16.png)
+![16](./assets/md16.png)
 
 ## 🔐 数据与安全
 
@@ -227,5 +226,5 @@ Mca 用户在下载安装后出现以下报错。这是由于新版 macOS 系统
 sudo spctl --master-disable
 ```
 
-[![img](/Users/ooooo/Files/tools/notebooks/images/fqa.png)](https://github.com/Funsiooo/Ai-Talk/blob/main/assets/fqa.png)
+[![img](./assets/fqa.png)](https://github.com/Funsiooo/Ai-Talk/blob/main/assets/fqa.png)
 
